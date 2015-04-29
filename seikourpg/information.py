@@ -1,26 +1,12 @@
 # Seikou Role Playing Game Kit (Information)
 #
 # Author: Marcus T. Taylor <mtaylor3121@gmail.com>
-# Website: https://github.com/mtaylor33/seikous-character-generator
+# Website: https://github.com/mtaylor33/seikourpg
 # Copyright: 2012, 2015
 #
 
-import os
 import sqlite3
-
-# SCG
-SCG_CONFIG_CORE = os.path.dirname(__file__)
-SCG_CONFIG_DATABASE = os.path.join(SCG_CONFIG_CORE, 'database', 'SCG.sqlite')
-
-# Races
-SCG_RACE_DRAGONBORN = 'Dragonborn'
-SCG_RACE_DWARF = 'Dwarf'
-SCG_RACE_ELADRIN = 'Eladrin'
-SCG_RACE_ELF = 'Elf'
-SCG_RACE_HALFELF = 'Half-elf'
-SCG_RACE_HALFLING = 'Halfling'
-SCG_RACE_HUMAN = 'Human'
-SCG_RACE_TIEFLING = 'Tiefling'
+from seikourpg.settings import *
 
 
 class Information:
@@ -43,7 +29,8 @@ class Information:
             Returns result if data found, None if not.
 
         """
-        conn = sqlite3.connect(SCG_CONFIG_DATABASE)
+        settings = Settings()
+        conn = sqlite3.connect(settings.get_database())
         cursor = conn.cursor()
         sql = None
         if probe_type is self.PROBE_TYPE_ALIGNMENT:
