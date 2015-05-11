@@ -6,12 +6,10 @@
 1. INTRODUCTION
 2. INSTALLATION & USAGE
 3. CHANGELOG
-
-
     
 ###1. INTRODUCTION
 
-**Seikou's Role Playing Game Kit** is a small python module used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. It should be noted that this software is not officially endorsed by Wizard of the Coast LLC.
+**Seikou's Role Playing Game Kit** is a python module used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. It should be noted that this software is not officially endorsed by Wizard of the Coast LLC.
 
 
 ###2. INSTALLATION & USAGE

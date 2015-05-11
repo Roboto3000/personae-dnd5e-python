@@ -7,6 +7,7 @@
 
 from math import floor
 import sqlite3
+from seikourpg.dice import Dice
 from seikourpg.settings import *
 
 
@@ -17,6 +18,14 @@ class Abilities:
             self._race = kwargs['race']
         else:
             self._race = 'Human'
+        if 'class_' in kwargs:
+            self._class = kwargs['class_']
+        else:
+            self._class = 'Fighter'
+        if 'level' in kwargs:
+            self._level = int(kwargs['level'])
+        else:
+            self._level = 1
         if 'strength' in kwargs:
             self._strength = kwargs['strength']
         else:
@@ -94,6 +103,14 @@ class Abilities:
                 bonus_list['charisma'] = charisma
         return bonus_list
 
+    def __get_class(self):
+        """Returns the class value."""
+        return self._class
+
+    def __get_level(self):
+        """Returns the level value."""
+        return self._level
+
     def __get_race(self):
         """Returns the racial value."""
         return self._race
@@ -164,6 +181,42 @@ class Abilities:
         """Returns dexterity score value."""
         return self._dexterity
 
+    def get_hp(self):
+        """Sets hit points for character based on class.
+
+        Returns:
+            Returns the number of calculated hit points.
+
+        """
+        try:
+            classes = [
+                'Barbarian', 'Bard', 'Cleric', 'Druid',
+                'Fighter', 'Monk', 'Paladin', 'Ranger',
+                'Rogue', 'Sorcerer', 'Warlock', 'Wizard'
+            ]
+            if self.__get_class() not in classes:
+                raise IndexError
+        except IndexError:
+            self._class = 'Fighter'
+        finally:
+            hit_points = 0
+            for l in range(0, self.__get_level()):
+                die = None
+                if self.__get_class() in ('Barbarian',):
+                    die = Dice(12)
+                if self.__get_class() in ('Fighter', 'Paladin', 'Ranger'):
+                    die = Dice(10)
+                if self.__get_class() in ('Bard', 'Cleric', 'Druid', 'Monk', 'Rogue', 'Warlock'):
+                    die = Dice(8)
+                if self.__get_class() in ('Sorcerer', 'Wizard'):
+                    die = Dice(6)
+                result = die.roll()
+                result += self.get_modifier(self.get_constitution())
+                if result < 1:
+                    result = 1
+                hit_points += result
+            return hit_points
+
     def get_intelligence(self):
         """Returns intelligence score value."""
         return self._intelligence
@@ -179,6 +232,25 @@ class Abilities:
 
         """
         return floor((value - 10)/2)
+
+    def get_proficiency(self):
+        """Returns proficiency bonus value."""
+        proficiency = 2
+        if self.__get_level() >= 5:
+            proficiency += 1
+        if self.__get_level() >= 9:
+            proficiency += 1
+        if self.__get_level() >= 13:
+            proficiency += 1
+        if self.__get_level() >= 17:
+            proficiency += 1
+        if self.__get_level() >= 21:
+            proficiency += 1
+        if self.__get_level() >= 25:
+            proficiency += 1
+        if self.__get_level() >= 29:
+            proficiency += 1
+        return proficiency
 
     def get_strength(self):
         """Returns strength score value."""

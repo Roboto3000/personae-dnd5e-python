@@ -90,12 +90,12 @@ class Skills:
         return num_of_skills
 
     def get_modifier(self, skill_name):
-        """Returns modifier value based on score.
+        """Returns skill modifier value based on skill.
 
         Args:
-            score: Score to return the modifier for.
+            skill_name: Skill to return a modifier for.
         Returns:
-            Returns modifier for the specified score.
+            Returns modifier for the specified skill.
 
         """
         settings = Settings()
@@ -119,21 +119,11 @@ class Skills:
                 score = self._charisma
         return int(floor((score - 10)/2))
 
-    def get_proficiency(self):
-        """Returns proficiency bonus value."""
-        proficiency = 2
-        if self.__get_level() >= 5:
-            proficiency += 1
-        if self.__get_level() >= 9:
-            proficiency += 1
-        if self.__get_level() >= 13:
-            proficiency += 1
-        if self.__get_level() >= 17:
-            proficiency += 1
-        return proficiency
-
     def get_skills(self, show_all=False):
         """Returns a list of skills for specified class.
+
+        Args:
+            show_all: If True, shows all skills regardless of class.
 
         Returns:
             Returns a dictionary of allowable skills by class.

@@ -14,7 +14,6 @@ class Information:
     # Data probe types
     PROBE_TYPE_ALIGNMENT = 100
     PROBE_TYPE_CLASS = 201
-    PROBE_TYPE_RACE = 302
 
     def __init__(self):
         pass
@@ -37,8 +36,6 @@ class Information:
             sql = 'SELECT description FROM alignments WHERE name=:alignment'
         if probe_type is self.PROBE_TYPE_CLASS:
             sql = 'SELECT description FROM classes WHERE name=:class'
-        if probe_type is self.PROBE_TYPE_RACE:
-            sql = 'SELECT description FROM races WHERE name=:race'
         cursor.execute(sql, query)
         description = cursor.fetchone()
         try:
@@ -67,14 +64,3 @@ class Information:
 
         """
         return self.__probe(self.PROBE_TYPE_CLASS, {'class': class_name})
-
-    def get_race(self, race_name):
-        """Retrieves description for race.
-
-        Args:
-            race_name: Race name to retrieve info for.
-        Returns:
-            Returns description if found, None if none found.
-
-        """
-        return self.__probe(self.PROBE_TYPE_RACE, {'race': race_name})

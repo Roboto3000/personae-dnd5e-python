@@ -6,18 +6,22 @@
 #
 
 import os
+import sys
 
 
 class Settings:
 
     def __init__(self, database='database/seikourpg.sqlite'):
         try:
-            if not os.path.exists(database):
+            if os.path.exists(database):
+                self._database = database
+            else:
                 raise ImportError
-            self._database = database
-        except ImportError:
+        except (AttributeError, ImportError):
             exit("Cannot find the required database: '%s'!" % database)
+        except NameError:
+            sys.exit("Cannot find the required database: '%s'!" % database)
 
     def get_database(self):
-        """Returns the full database path."""
+        """Returns the database path."""
         return self._database

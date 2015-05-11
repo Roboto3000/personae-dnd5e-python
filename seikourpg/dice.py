@@ -8,71 +8,35 @@
 from random import randint
 
 
-def d4():
-    """Rolls a 4 sided dice.
+class Dice:
 
-    Returns:
-        Returns the result of the die roll.
+    def __init__(self, die):
+        if die in (4, 6, 8, 10, 12, 20, 100):
+            self._die = die
+        else:
+            self._die = 4
 
-    """
-    return randint(1, 4)
+    @staticmethod
+    def __die(die):
+        """Generates a roll based on specified die.
 
+        Args:
+            die: Specified die type to use.
 
-def d6():
-    """Rolls a 6 sided dice.
+        Returns:
+            Returns the result of the die.
 
-    Returns:
-        Returns the result of the die roll.
+        """
+        return randint(1, die)
 
-    """
-    return randint(1, 6)
+    def roll(self, modifier=0):
+        """Rolls the specified die width specified modifier.
 
+        Args:
+            modifier: Modifier to add to the specified roll.
 
-def d8():
-    """Rolls a 8 sided dice.
+        Returns:
+            Returns the modified result of the die roll.
 
-    Returns:
-        Returns the result of the die roll.
-
-    """
-    return randint(1, 8)
-
-
-def d10():
-    """Rolls a 10 sided dice.
-
-    Returns:
-        Returns the result of the die roll.
-
-    """
-    return randint(1, 10)
-
-
-def d12():
-    """Rolls a 12 sided dice.
-
-    Returns:
-        Returns the result of the die roll.
-
-    """
-    return randint(1, 12)
-
-
-def d20():
-    """Rolls a 20 sided dice.
-
-    Returns:
-        Returns the result of the die roll.
-
-    """
-    return randint(1, 20)
-
-
-def d100():
-    """Rolls a 100 sided dice.
-
-    Returns:
-        Returns the result of the die roll.
-
-    """
-    return randint(1, 100)
+        """
+        return self.__die(self._die) + modifier
