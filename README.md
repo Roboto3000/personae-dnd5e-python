@@ -18,5 +18,9 @@ Simply unzip the contents to a directory of your choosing. The module comes in t
 
 ###3. CHANGELOG
 
-- 150428
+- 20150626
+    - Added get_version method to Settings class.
+    - Combined classes into one package file.
+    
+- 20150428
     - Initial release.
