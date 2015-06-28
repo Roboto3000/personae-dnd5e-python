@@ -196,8 +196,13 @@ class Abilities:
         """Returns dexterity score value."""
         return self._dexterity
 
-    def get_hp(self):
+    def get_hp(self, use_average=False):
         """Sets hit points for character based on class.
+
+        Args:
+            use_average:
+                True: Use average hit points/level by class.
+                False: Randomly generates hit points/level by class.
 
         Returns:
             Returns the number of calculated hit points.
@@ -214,23 +219,51 @@ class Abilities:
         except IndexError:
             self._class = 'Fighter'
         finally:
+            tier_12 = ('Barbarian',)
+            tier_10 = ('Fighter', 'Paladin', 'Ranger')
+            tier_8 = ('Bard', 'Cleric', 'Druid', 'Monk', 'Rogue', 'Warlock')
+            tier_6 = ('Sorcerer', 'Wizard')
             hit_points = 0
-            # max_hp = 0
-            for l in range(0, self.__get_level()):
+            if use_average:
+                level = self.__get_level() - 1
+            else:
+                level = self.__get_level()
+            for l in range(0, level):
                 die = None
-                if self.__get_class() in ('Barbarian',):
-                    die = Dice(12)
-                if self.__get_class() in ('Fighter', 'Paladin', 'Ranger'):
-                    die = Dice(10)
-                if self.__get_class() in ('Bard', 'Cleric', 'Druid', 'Monk', 'Rogue', 'Warlock'):
-                    die = Dice(8)
-                if self.__get_class() in ('Sorcerer', 'Wizard'):
-                    die = Dice(6)
-                result = die.roll()
+                result = 0
+                if not use_average:
+                    if self.__get_class() in tier_12:
+                        die = Dice(12)
+                    if self.__get_class() in tier_10:
+                        die = Dice(10)
+                    if self.__get_class() in tier_8:
+                        die = Dice(8)
+                    if self.__get_class() in tier_6:
+                        die = Dice(6)
+                    result = die.roll()
+                    if result < 1:
+                        result = 1
+                if use_average:
+                    if self.__get_class() in tier_12:
+                        result = 7
+                    if self.__get_class() in tier_10:
+                        result = 6
+                    if self.__get_class() in tier_8:
+                        result = 5
+                    if self.__get_class() in tier_6:
+                        result = 4
                 result += self.get_modifier(self.get_constitution())
-                if result < 1:
-                    result = 1
                 hit_points += result
+            # Apply base values if averages used
+            if use_average:
+                if self.__get_class() in tier_12:
+                    hit_points += 12 + self.get_modifier(self.get_constitution())
+                if self.__get_class() in tier_10:
+                    hit_points += 10 + self.get_modifier(self.get_constitution())
+                if self.__get_class() in tier_8:
+                    hit_points += 8 + self.get_modifier(self.get_constitution())
+                if self.__get_class() in tier_6:
+                    hit_points += 6 + self.get_modifier(self.get_constitution())
             return hit_points
 
     def get_intelligence(self):
