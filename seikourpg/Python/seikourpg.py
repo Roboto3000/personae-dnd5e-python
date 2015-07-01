@@ -880,7 +880,7 @@ class Skills:
         settings = Settings()
         conn = sqlite3.connect(settings.get_database())
         cursor = conn.cursor()
-        s = "SELECT name FROM skills WHERE %s='Y'" % self.__get_class().lower()
+        s = "SELECT name FROM skills WHERE %s='Y'" % self.__get_class()
         if show_all:
             s = 'SELECT name FROM skills'
         try:

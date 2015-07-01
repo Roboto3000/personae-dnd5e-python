@@ -605,7 +605,7 @@ class Feats
         $feats_list = array();
         $index = 1;
         foreach ( $feats_temp as $feat ) {
-            $feats_list[$index] = $feat;
+            $feats_list[$index] = $feat['name'];
             $index += 1;
         }
         return $feats_list;
@@ -811,8 +811,10 @@ class Origins
         $sql = sprintf('SELECT name FROM %s', $origin_type);
         $origin_result = $connect->query($sql);
         $origin_list = array();
+        $index = 1;
         foreach ( $origin_result as $row ) {
-            $origin_list[] = $row['name'];
+            $origin_list[$index] = $row['name'];
+            $index += 1;
         }
         $settings = null;
         return $origin_list;
@@ -1028,15 +1030,16 @@ class Skills
         #"""
         $settings = new Settings();
         $connect = $settings->get_database();
-        $sql = sprintf("SELECT name FROM skills WHERE %s='Y'", strtolower($this->__get_class()));
-        if ($show_all)
+        if (!$show_all)
+            $sql = sprintf("SELECT name FROM skills WHERE %s='Y'", $this->__get_class());
+        else
             $sql = 'SELECT name FROM skills';
         $skills = $connect->query($sql);
         $connect = null;
         $skill_list = array();
         $index = 1;
         foreach ($skills as $skill) {
-            $skill_list[$index] = $skill;
+            $skill_list[$index] = $skill['name'];
             $index += 1;
         }
         return $skill_list;
