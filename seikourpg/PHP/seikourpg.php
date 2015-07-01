@@ -112,9 +112,9 @@ class Abilities
         $connect = $settings->get_database();
         $sql = 'SELECT strength,dexterity,constitution,' .
             'intelligence,wisdom,charisma FROM races ' .
-            'WHERE name=?';
+            'WHERE name=:race';
         $stm = $connect->prepare($sql);
-        $stm->bindValue($this->__get_race(), \PDO::PARAM_INT);
+        $stm->bindValue(':race', $this->__get_race(), \PDO::PARAM_STR);
         $stm->execute();
         $bonus_result = $stm->fetchAll();
         $bonus_list = array();
@@ -490,9 +490,9 @@ class Feats
         #"""
         $settings = new Settings();
         $connect = $settings->get_database();
-        $sql = 'SELECT armors,weapons FROM classes WHERE name=?';
+        $sql = 'SELECT armors,weapons FROM classes WHERE name=:class';
         $stm = $connect->prepare($sql);
-        $stm->bindValue($this->__get_class(), \PDO::PARAM_STR);
+        $stm->bindValue(':class', $this->__get_class(), \PDO::PARAM_STR);
         $stm->execute();
         $proficiency_temp = $stm->fetchColumn() . '|' . $stm->fetchColumn(1);
         $connect = null;
@@ -556,9 +556,9 @@ class Feats
         $connect = $settings->get_database();
         $sql = "SELECT proficiency,strength,dexterity," .
             "constitution,intelligence,wisdom,charisma " .
-            "FROM feats WHERE name=?";
+            "FROM feats WHERE name=:feat_name";
         $stm = $connect->prepare($sql);
-        $stm->bindValue($feat_name, \PDO::PARAM_STR);
+        $stm->bindValue(':feat_name', $feat_name, \PDO::PARAM_STR);
         $stm->execute();
         $requirements = array(
             'proficiency' => $stm->fetchColumn(),
@@ -748,11 +748,14 @@ class Information
         $connect = $settings->get_database();
         $sql = null;
         if ($probe_type == $this::PROBE_TYPE_ALIGNMENT)
-            $sql = 'SELECT description FROM alignments WHERE name=?';
+            $sql = 'SELECT description FROM alignments WHERE name=:alignment';
         if ($probe_type == $this::PROBE_TYPE_CLASS)
-            $sql = 'SELECT description FROM classes WHERE name=?';
+            $sql = 'SELECT description FROM classes WHERE name=:class';
         $stm = $connect->prepare($sql);
-        $stm->bindValue($query, \PDO::PARAM_STR);
+        if ($probe_type == $this::PROBE_TYPE_ALIGNMENT)
+            $stm->bindValue(':alignment', $query, \PDO::PARAM_STR);
+        if ($probe_type == $this::PROBE_TYPE_CLASS)
+            $stm->bindValue(':class', $query, \PDO::PARAM_STR);
         $stm->execute();
         return $stm->fetchColumn();
     }
@@ -997,9 +1000,9 @@ class Skills
         #"""
         $settings = new Settings();
         $connect = $settings->get_database();
-        $sql = 'SELECT ability FROM skills WHERE name=?';
+        $sql = 'SELECT ability FROM skills WHERE name=:skill_name';
         $stm = $connect->prepare($sql);
-        $stm->bindValue($skill_name, \PDO::PARAM_STR);
+        $stm->bindValue(':skill_name', $skill_name, \PDO::PARAM_STR);
         $stm->execute();
         $ability = $stm->fetchColumn();
         $connect = null;
