@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 DROP TABLE IF EXISTS "skills";
-CREATE TABLE [skills] ([name] TEXT, [barbarian] TEXT, [bard] TEXT, [cleric] TEXT, [druid] TEXT, [fighter] TEXT, [monk] TEXT, [paladin] TEXT, [ranger] TEXT, [rogue] TEXT, [sorcerer] TEXT, [warlock] TEXT, [wizard] TEXT, [ability] TEXT);
+CREATE TABLE [skills] ([name] TEXT, [Barbarian] TEXT, [Bard] TEXT, [Cleric] TEXT, [Druid] TEXT, [Fighter] TEXT, [Monk] TEXT, [Paladin] TEXT, [Ranger] TEXT, [Rogue] TEXT, [Sorcerer] TEXT, [Warlock] TEXT, [Wizard] TEXT, [ability] TEXT);
 INSERT INTO `skills` VALUES('Acrobatics','N','Y','N','N','Y','Y','N','N','Y','N','N','N','Dexterity');
 INSERT INTO `skills` VALUES('Animal Handling','Y','Y','N','Y','Y','N','N','Y','Y','N','N','N','Wisdom');
 INSERT INTO `skills` VALUES('Arcana','N','Y','N','Y','N','N','N','N','N','Y','Y','Y','Intelligence');
