@@ -29,18 +29,33 @@ import sqlite3
 class Abilities:
 
     def __init__(self, **kw):
-        if 'race' in kw:
-            self._race = kw['race']
-        else:
+        try:
+            if 'race' in kw:
+                origin = Origins()
+                if origin.is_origin(origin.ORIGIN_TYPE_RACE, kw['race']):
+                    self._race = kw['race']
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
+        except ValueError:
             self._race = 'Human'
-        if 'class_' in kw:
-            self._class = kw['class_']
-        else:
+        try:
+            if 'class_' in kw:
+                origin = Origins()
+                if origin.is_origin(origin.ORIGIN_TYPE_CLASS, kw['class_']):
+                    self._class = kw['class_']
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
+        except ValueError:
             self._class = 'Fighter'
         if 'level' in kw:
-            self._level = int(kw['level'])
-        else:
-            self._level = 1
+            if 1 <= int(kw['level']) <= 20:
+                self._level = int(kw['level'])
+            else:
+                self._level = 1
         if 'strength' in kw:
             self._strength = kw['strength']
         else:
@@ -270,6 +285,10 @@ class Abilities:
         """Returns intelligence score value."""
         return self._intelligence
 
+    def get_level(self):
+        """Returns level value."""
+        return self._level
+
     @staticmethod
     def get_modifier(value):
         """Returns modifier for specified ability type.
@@ -315,7 +334,7 @@ class Abilities:
 #
 class Dice:
 
-    def __init__(self, die):
+    def __init__(self, die=4):
         if die in (4, 6, 8, 10, 12, 20, 100):
             self._die = die
         else:
@@ -353,14 +372,22 @@ class Dice:
 class Feats:
 
     def __init__(self, **kw):
-        if 'class_' in kw:
-            self._class = kw['class_']
-        else:
+        try:
+            if 'class_' in kw:
+                origin = Origins()
+                if origin.is_origin(origin.ORIGIN_TYPE_CLASS, kw['class_']):
+                    self._class = kw['class_']
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
+        except ValueError:
             self._class = 'Fighter'
         if 'level' in kw:
-            self._level = int(kw['level'])
-        else:
-            self._level = 1
+            if 1 <= int(kw['level']) <= 20:
+                self._level = int(kw['level'])
+            else:
+                self._level = 1
         if 'charisma' in kw:
             self._charisma = int(kw['charisma'])
         else:
@@ -680,6 +707,21 @@ class Origins:
             origin_options.append(origin[0][:])
         return origin_options
 
+    def is_origin(self, origin_type, origin_check):
+        """Checks if an origin check is within the origin list.
+
+        Args:
+            origin_type: Origin type to check origin check against.
+            origin_check: Value to check against origin type.
+        Returns:
+            Returns True if origin_check found, False if not
+
+        """
+        origin_list = self.get_origins(origin_type)
+        if origin_check in origin_list:
+            return True
+        return False
+
 
 #
 # Seikou Role Playing Game Kit (Settings)
@@ -713,13 +755,27 @@ class Settings:
 class Skills:
 
     def __init__(self, **kw):
-        if 'race' in kw:
-            self._race = kw['race']
-        else:
+        try:
+            if 'race' in kw:
+                origin = Origins()
+                if origin.is_origin(origin.ORIGIN_TYPE_RACE, kw['race']):
+                    self._race = kw['race']
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
+        except ValueError:
             self._race = 'Human'
-        if 'class_' in kw:
-            self._class = kw['class_']
-        else:
+        try:
+            if 'class_' in kw:
+                origin = Origins()
+                if origin.is_origin(origin.ORIGIN_TYPE_CLASS, kw['class_']):
+                    self._class = kw['class_']
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
+        except ValueError:
             self._class = 'Fighter'
         if 'charisma' in kw:
             self._charisma = int(kw['charisma'])
