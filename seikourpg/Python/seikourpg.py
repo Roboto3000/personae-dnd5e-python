@@ -13,7 +13,7 @@ __all__ = [
     "origins",
     "skills"
 ]
-__version__ = '20150626'
+__version__ = '20150728'
 
 
 from math import floor
@@ -281,6 +281,38 @@ class Abilities:
                     hit_points += 6 + self.get_modifier(self.get_constitution())
             return hit_points
 
+    def get_increases(self, class_=False, level=False):
+        """Returns the number of ability increases for a character.
+
+        Args:
+            class_: The class to check increase for.
+        Returns:
+            The level of the class to check for.
+
+        """
+        increases = 0
+        if not class_:
+            class_ = self.__get_class()
+        if not level:
+            level = self.__get_level()
+        if level >= 4:
+            increases += 1
+        if class_ is 'Fighter' and level >= 6:
+            increases += 1
+        if level >= 8:
+            increases += 1
+        if class_ is 'Rogue' and level >= 10:
+            increases += 1
+        if level >= 12:
+            increases += 1
+        if class_ is 'Fighter' and level >= 14:
+            increases += 1
+        if level >= 16:
+            increases += 1
+        if level >= 19:
+            increases += 1
+        return increases
+
     def get_intelligence(self):
         """Returns intelligence score value."""
         return self._intelligence
@@ -296,7 +328,7 @@ class Abilities:
         Args:
             value: The value to retrieve a modifier for.
         Returns:
-            The modifier for the requested score.
+            The modifier for the requested value.
 
         """
         return floor((value - 10)/2)
@@ -333,6 +365,15 @@ class Abilities:
 # Seikou Role Playing Game Kit (Dice)
 #
 class Dice:
+
+    # Die types
+    DICE_TYPE_D4 = 4
+    DICE_TYPE_D6 = 6
+    DICE_TYPE_D8 = 8
+    DICE_TYPE_D10 = 10
+    DICE_TYPE_D12 = 12
+    DICE_TYPE_D20 = 20
+    DICE_TYPE_D100 = 100
 
     def __init__(self, die=4):
         if die in (4, 6, 8, 10, 12, 20, 100):
@@ -523,7 +564,7 @@ class Feats:
         return feats_dict
 
     def has_requirements(self, feat_name):
-        """Checks if requirements met for feat.
+        """Checks if requirements are met for the specified feat.
 
         Args:
             feat_name: The feat to retrieve requirements for.
@@ -531,6 +572,11 @@ class Feats:
             Returns True if requirements met, False if not.
 
         """
+        # Magic Initiative
+        if feat_name is 'Magic Initiative':
+            classes = ('Bard', 'Cleric', 'Druid', 'Sorcerer', 'Warlock', 'Wizard')
+            if self.__get_class() not in classes:
+                return False
         # Ritual Caster Check
         if feat_name is 'Ritual Caster':
             if self.__get_intelligence() < 13 and self.__get_wisdom() < 13:
@@ -684,7 +730,6 @@ class Origins:
     ORIGIN_TYPE_ALIGNMENT = 'alignments'
     ORIGIN_TYPE_CLASS = 'classes'
     ORIGIN_TYPE_RACE = 'races'
-    ORIGIN_TYPE_SEX = 'sexes'
 
     @staticmethod
     def get_origins(origin_type):
