@@ -1,6 +1,6 @@
 #Seikou's Role Playing Game Kit
 
-Author: Marcus T. Taylor <mtaylor3121@gmail.com>
+**Author:** Marcus T. Taylor <mtaylor3121@gmail.com>
 
 
 ##INDEX
@@ -21,6 +21,12 @@ Author: Marcus T. Taylor <mtaylor3121@gmail.com>
 
 
 ###3. Changelog
+
+- Version *20150728*
+
+    - Added get_increases method to Abilities class.
+    - Implemented requirements check for Magic Initiative feat.
+    - Cleaned up documentation for PHP library.
 
 - Version *20150626*
 
