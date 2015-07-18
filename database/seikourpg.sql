@@ -49,7 +49,7 @@ INSERT INTO `feats` VALUES('Athlete','-',1,1,1,1,1,1);
 INSERT INTO `feats` VALUES('Charger','-',1,1,1,1,1,1);
 INSERT INTO `feats` VALUES('Crossbow Expert','-',1,1,1,1,1,1);
 INSERT INTO `feats` VALUES('Defensive Duelist','-',1,13,1,1,1,1);
-INSERT INTO `feats` VALUES('Dual Wielder','-',1,1,13,1,13,1);
+INSERT INTO `feats` VALUES('Dual Wielder','-',1,1,1,1,1,1);
 INSERT INTO `feats` VALUES('Dungeon Delver','-',1,1,1,1,1,1);
 INSERT INTO `feats` VALUES('Durable','-',1,1,1,1,1,1);
 INSERT INTO `feats` VALUES('Elemental Adept','-',1,1,1,1,1,1);
