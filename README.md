@@ -1,4 +1,4 @@
-#Seikou's Role Playing Game Kit
+#Personae RPG Library
 
 **Author:** Marcus T. Taylor <mtaylor3121@gmail.com>
 
@@ -12,7 +12,7 @@
 
 ###1. Introduction
 
-**Seikou's Role Playing Game Kit** is a python module used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. Primarily, I've been using the module to develop a GUI application for generating NPCs for my DnD games, which you can find this project [here](https://github.com/mtaylor33/seikous-npc-generator). It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC.
+**Personae RPG Library** is a python library used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. Primarily, I've been using the module to develop a GUI application for generating NPCs for my DnD games, which you can find this project [here](https://github.com/mtaylor33/seikous-npc-generator). It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC.
 
 
 ###2. Installation
