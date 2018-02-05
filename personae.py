@@ -2,7 +2,7 @@
 #
 # Author: Marcus T. Taylor <mtaylor3121@gmail.com>
 # Website: https://github.com/mtaylor33/Personae
-# Copyright: 2012, 2018
+# Copyright: 2015, 2018
 #
 try:
     from personae_config import *
