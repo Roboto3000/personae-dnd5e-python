@@ -11,7 +11,7 @@
 
 ### 1. Introduction
 
-**Personae RPG Library** is a python library used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. Primarily, I've been using the module to develop a GUI application for generating NPCs for my DnD games, which you can find this project [here](https://github.com/mtaylor33/Personae). It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC.
+**Personae RPG Library** is a python library used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. Primarily, I've been using the module to develop a tool to randomly generate characters for my DnD games. It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC.
 
 
 ### 2. Changelog
