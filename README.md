@@ -6,21 +6,21 @@
 ##INDEX
 
 1. INTRODUCTION
-2. INSTALLATION
-3. CHANGELOG
+2. CHANGELOG
 
 
 ###1. Introduction
 
-**Personae RPG Library** is a python library used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. Primarily, I've been using the module to develop a GUI application for generating NPCs for my DnD games, which you can find this project [here](https://github.com/mtaylor33/seikous-npc-generator). It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC.
+**Personae RPG Library** is a python library used in the creation of RPG tools utilizing the Dungeon's & Dragons 5th edition rule set. Primarily, I've been using the module to develop a GUI application for generating NPCs for my DnD games, which you can find this project [here](https://github.com/mtaylor33/Personae). It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC.
 
 
-###2. Installation
+###2. Changelog
 
-**Python:** Simply unzip the contents to a directory of your choosing. The module comes in two parts. The 'database' directory should be placed in the root directory of the application you're developing. This is important as the module relies upon this database to function. Lastly, the contents of the 'seikourpg' folder should be copied to the 'Lib' directory of your Python installation.
+- Version *20180203*
 
-
-###3. Changelog
+    - Merged 'get_armor_proficiency' and 'get_weapon_proficiency' functions into 'get_class_proficiency' function.
+    - SQLite database removed from project. Data now stored in personae_config.py.
+    - Personae library rewrote completely from scratch.
 
 - Version *20150728*
 
