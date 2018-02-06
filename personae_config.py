@@ -16,6 +16,7 @@ Format for including new alignments:
     'Abbreviation':'String describing abbreviation for alignment e.g: Lawful Evil 'LE'.', 
     'Description':'String describing the alignment.'
     }
+
 #######################################################################
 """
 personae_alignment = {
@@ -1032,6 +1033,7 @@ Format for including new skills:
     'Class':'String describing classes trained in this skill e.g: 'Fighter'. Multiple values should be seperated with commas.', 
     'Ability':'String describing the ability associated with this skill e.g: 'Strength'.'
     }
+
 #######################################################################
 """
 personae_skill = {
