@@ -19,7 +19,7 @@
 - Version *20180203*
 
     - Merged 'get_armor_proficiency' and 'get_weapon_proficiency' functions into 'get_class_proficiency' function.
-    - SQLite database removed from project. Data now stored in personae_config.py.
+    - SQLite database removed from project. DnD data is now stored within 'personae_config.py'.
     - Personae library rewrote completely from scratch.
 
 - Version *20150728*
