@@ -157,6 +157,7 @@ def get_modifier(score):
     """
     return (score - 10)/2
 
+
 def get_version():
     """Returns the current version of Persona.
     
@@ -177,6 +178,7 @@ def get_skills():
     """
     return __myitems__(personae_skill)
 
+
 def get_skill_modifier(skill, scores):
     """Returns skill ability modifier value for skill.
     
@@ -188,6 +190,7 @@ def get_skill_modifier(skill, scores):
         Returns a integer for skill modifier.
     """
     return scores[get_skill_ability(skill)]['Modifier']
+
 
 def has_requirements(feat, _class, a_prof, w_prof, scores):
     """Checks if scores, a_prof, w_prof has requirements for feat.
@@ -225,6 +228,7 @@ def has_requirements(feat, _class, a_prof, w_prof, scores):
     if scores['Charisma']['Score'] < require['Charisma']:
         return False
     return True
+
 
 def is_caster(_class, level=1):
     """Returns True if _class is spellcaster; False if not.
