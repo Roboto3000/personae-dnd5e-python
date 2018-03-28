@@ -22,7 +22,7 @@ def __myitems__(data):
     except AttributeError:
         return None
     
-def get_alignment_list():
+def get_alignments():
     """Returns list of character classes.
     
     Returns:
@@ -30,7 +30,27 @@ def get_alignment_list():
     """
     return __myitems__(personae_alignment)
 
-def get_class_list():
+
+def get_bonus(race):
+    """Returns ability modifiers by race.
+    
+    Args:
+        race (string): Race to retrieve racial bonus(es) for.
+        
+    Returns:
+        Returns racial bonus(es) as dict or None if race not found.
+    """
+    try:
+        _bonus = personae_race[race]
+        bonus = {}
+        for ability,value in _bonus.iteritems():
+            if _bonus[ability] is not 0:
+                bonus[ability] = value
+        return bonus
+    except KeyError:
+        return None
+
+def get_classes():
     """Returns list of character classes.
     
     Returns:
@@ -38,7 +58,22 @@ def get_class_list():
     """
     return __myitems__(personae_class)
 
-def get_class_proficiency(_class, proficiency_flag='a'):
+def get_feats(omitted=[]):
+    """Returns omitted list of character feats.
+    
+    Args:
+        omitted (list): List of feats to exclude.
+        
+    Returns:
+        Returns a list of feats sans any omitted feats.
+    """
+    feats = list(__myitems__(personae_feat))
+    if len(omitted):
+        for feat in omitted:
+            feats.remove(feat)
+    return tuple(feats)
+
+def get_proficiencies(_class, proficiency_flag='a'):
     """Returns armor/weapon proficiencies by _class.
     
     Args:
@@ -64,22 +99,7 @@ def get_class_proficiency(_class, proficiency_flag='a'):
     except KeyError:
         return None
 
-def get_feat_list(omitted=[]):
-    """Returns omitted list of character feats.
-    
-    Args:
-        omitted (list): List of feats to exclude.
-        
-    Returns:
-        Returns a list of feats sans any omitted feats.
-    """
-    feats = list(__myitems__(personae_feat))
-    if len(omitted):
-        for feat in omitted:
-            feats.remove(feat)
-    return tuple(feats)
-
-def get_feat_requirement(feat):
+def get_requirements(feat):
     """Return requirements for feat.
     
     Args:
@@ -98,34 +118,15 @@ def get_modifier(score):
     """
     return (score - 10)/2
 
-def get_personae_version():
+def get_version():
     """Returns the current version of Persona.
     
     Returns:
         Returns version number as integer.
     """
     return PERSONAE_VERSION
-
-def get_race_bonus(race):
-    """Returns ability modifiers by race.
     
-    Args:
-        race (string): Race to retrieve racial bonus(es) for.
-        
-    Returns:
-        Returns racial bonus(es) as dict or None if race not found.
-    """
-    try:
-        _bonus = personae_race[race]
-        bonus = {}
-        for ability,value in _bonus.iteritems():
-            if _bonus[ability] is not 0:
-                bonus[ability] = value
-        return bonus
-    except KeyError:
-        return None
-    
-def get_race_list():
+def get_races():
     """Returns list of character races.
     
     Returns:
@@ -133,7 +134,7 @@ def get_race_list():
     """
     return __myitems__(personae_race)
 
-def get_skill_ability(skill):
+def get_ability(skill):
     """Returns primary ability name for skill.
     
     Args:
@@ -144,7 +145,7 @@ def get_skill_ability(skill):
     """
     return personae_skill[skill]['Ability']
 
-def get_skill_allotment(_class):
+def get_allotment(_class):
     """Returns number of skills by _class.
     
     Args:
@@ -159,7 +160,7 @@ def get_skill_allotment(_class):
         num_of_skills = 3
     return num_of_skills
 
-def get_skill_list():
+def get_skills():
     """Returns list of character skills.
     
     Args:
@@ -182,7 +183,7 @@ def get_skill_modifier(skill, scores):
     """
     return scores[get_skill_ability(skill)]['Modifier']
 
-def has_feat_requirement(feat, _class, a_prof, w_prof, scores):
+def has_requirements(feat, _class, a_prof, w_prof, scores):
     """Checks if scores, a_prof, w_prof has requirements for feat.
     
     Args:
@@ -198,7 +199,7 @@ def has_feat_requirement(feat, _class, a_prof, w_prof, scores):
     if feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
         if not is_caster(_class):
             return False
-    require = get_feat_requirement(feat)
+    require = get_requirements(feat)
     if require['Class'] is not '-':
         if _class not in require['Class'].split(','):
             return False
@@ -252,18 +253,18 @@ if __name__ == '__main__':
     }
     print get_alignment_list()
     print ap
-    print get_class_list()
-    print get_feat_list()
-    print get_feat_requirement('Actor')
+    print get_classes()
+    print get_feats()
+    print get_requirements('Actor')
     print get_modifier(20)
-    print get_personae_version()
-    print get_race_bonus('Elf, Drow')
-    print get_race_list()
-    print get_skill_ability('Acrobatics')
-    print get_skill_allotment('Fighter')
-    print get_skill_list()
+    print get_version()
+    print get_bonus('Elf, Drow')
+    print get_races()
+    print get_ability('Acrobatics')
+    print get_allotment('Fighter')
+    print get_skills()
     print get_skill_modifier('Acrobatics', scores)
     print wp
-    print has_feat_requirement('Spell Sniper', 'Fighter', ap, wp, scores)
+    print has_requirements('Spell Sniper', 'Fighter', ap, wp, scores)
     #print is_caster('Fighter', 3)
     print is_caster('Wizard')
