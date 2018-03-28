@@ -22,7 +22,6 @@ def __myitems__(data):
     except AttributeError:
         return None
 
-
 def get_ability(skill):
     """Returns primary ability name for skill.
     
@@ -34,7 +33,6 @@ def get_ability(skill):
     """
     return personae_skill[skill]['Ability']
 
-
 def get_alignments():
     """Returns list of character classes.
     
@@ -42,7 +40,6 @@ def get_alignments():
         Returns a tuple of class names.
     """
     return __myitems__(personae_alignment)
-
 
 def get_allotment(_class):
     """Returns number of skills by _class.
@@ -58,7 +55,6 @@ def get_allotment(_class):
     if _class is 'Bard' or 'Ranger':
         num_of_skills = 3
     return num_of_skills
-
 
 def get_bonus(race):
     """Returns ability modifiers by race.
@@ -136,7 +132,6 @@ def get_races():
     """
     return __myitems__(personae_race)
 
-
 def get_requirements(feat):
     """Return requirements for feat.
     
@@ -147,7 +142,6 @@ def get_requirements(feat):
         Returns a dictionary of feat requirements.
     """
     return personae_feat[feat]
-
         
 def get_modifier(score):
     """Returns modifier for score.
@@ -157,7 +151,6 @@ def get_modifier(score):
     """
     return (score - 10)/2
 
-
 def get_version():
     """Returns the current version of Persona.
     
@@ -165,7 +158,6 @@ def get_version():
         Returns version number as integer.
     """
     return PERSONAE_VERSION
-
 
 def get_skills():
     """Returns list of character skills.
@@ -178,7 +170,6 @@ def get_skills():
     """
     return __myitems__(personae_skill)
 
-
 def get_skill_modifier(skill, scores):
     """Returns skill ability modifier value for skill.
     
@@ -190,7 +181,6 @@ def get_skill_modifier(skill, scores):
         Returns a integer for skill modifier.
     """
     return scores[get_skill_ability(skill)]['Modifier']
-
 
 def has_requirements(feat, _class, a_prof, w_prof, scores):
     """Checks if scores, a_prof, w_prof has requirements for feat.
@@ -229,7 +219,6 @@ def has_requirements(feat, _class, a_prof, w_prof, scores):
         return False
     return True
 
-
 def is_caster(_class, level=1):
     """Returns True if _class is spellcaster; False if not.
     
@@ -251,8 +240,8 @@ def is_caster(_class, level=1):
 
 if __name__ == '__main__':
     # PERSONAE DEBUG CODE
-    ap = get_class_proficiency('Cleric', 'a')
-    wp = get_class_proficiency('Fighter', 'w')
+    ap = get_proficiencies('Cleric', 'a')
+    wp = get_proficiencies('Fighter', 'w')
     scores = {
         'Strength': {'Modifier': 0, 'Score': 10}, 
         'Dexterity': {'Modifier': -1, 'Score': 8}, 
@@ -261,7 +250,7 @@ if __name__ == '__main__':
         'Wisdom': {'Modifier': 1, 'Score': 12}, 
         'Charisma': {'Modifier': 2, 'Score': 15}
     }
-    print get_alignment_list()
+    print get_alignments()
     print ap
     print get_classes()
     print get_feats()
