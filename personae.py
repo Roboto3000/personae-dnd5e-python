@@ -21,7 +21,20 @@ def __myitems__(data):
         return tuple(out)
     except AttributeError:
         return None
+
+
+def get_ability(skill):
+    """Returns primary ability name for skill.
     
+    Args:
+        skill (string): Skill to return primary ability for.
+
+    Returns:
+        Returns a string name of the primary skill.
+    """
+    return personae_skill[skill]['Ability']
+
+
 def get_alignments():
     """Returns list of character classes.
     
@@ -29,6 +42,22 @@ def get_alignments():
         Returns a tuple of class names.
     """
     return __myitems__(personae_alignment)
+
+
+def get_allotment(_class):
+    """Returns number of skills by _class.
+    
+    Args:
+        _class (string): Class to return skill allotment for.
+    Returns:
+        Returns integer of skills by _class.
+    """
+    num_of_skills = 2
+    if _class is 'Rogue':
+        num_of_skills = 4
+    if _class is 'Bard' or 'Ranger':
+        num_of_skills = 3
+    return num_of_skills
 
 
 def get_bonus(race):
@@ -98,6 +127,15 @@ def get_proficiencies(_class, proficiency_flag='a'):
             return ()
     except KeyError:
         return None
+    
+def get_races():
+    """Returns list of character races.
+    
+    Returns:
+        Returns a tuple of race names.
+    """
+    return __myitems__(personae_race)
+
 
 def get_requirements(feat):
     """Return requirements for feat.
@@ -109,6 +147,7 @@ def get_requirements(feat):
         Returns a dictionary of feat requirements.
     """
     return personae_feat[feat]
+
         
 def get_modifier(score):
     """Returns modifier for score.
@@ -125,40 +164,7 @@ def get_version():
         Returns version number as integer.
     """
     return PERSONAE_VERSION
-    
-def get_races():
-    """Returns list of character races.
-    
-    Returns:
-        Returns a tuple of race names.
-    """
-    return __myitems__(personae_race)
 
-def get_ability(skill):
-    """Returns primary ability name for skill.
-    
-    Args:
-        skill (string): Skill to return primary ability for.
-
-    Returns:
-        Returns a string name of the primary skill.
-    """
-    return personae_skill[skill]['Ability']
-
-def get_allotment(_class):
-    """Returns number of skills by _class.
-    
-    Args:
-        _class (string): Class to return skill allotment for.
-    Returns:
-        Returns integer of skills by _class.
-    """
-    num_of_skills = 2
-    if _class is 'Rogue':
-        num_of_skills = 4
-    if _class is 'Bard' or 'Ranger':
-        num_of_skills = 3
-    return num_of_skills
 
 def get_skills():
     """Returns list of character skills.
