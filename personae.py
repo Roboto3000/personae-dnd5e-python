@@ -156,7 +156,7 @@ def get_version():
     return PERSONAE_VERSION
 
 def has_requirements(feat, _class, a_prof, w_prof, scores):
-    """Checks if scores, a_prof, w_prof has requirements for feat.
+    """Checks if scores, a_prof, w_prof meet requirements for feat.
     
     Args:
         feat (string): Feat to check requirements for.
