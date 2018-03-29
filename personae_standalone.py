@@ -13,6 +13,14 @@ def get_allotment(_class):
         num_of_skills = 3
     return num_of_skills
 
+def get_modifier(score):
+    """Returns modifier for score.
+    
+    Returns:
+        Returns modifier value (score - 10)/2.
+    """
+    return (score - 10)/2
+
 def has_requirements(feat, _class, a_prof, w_prof, scores):
     """Checks if scores, a_prof, w_prof has requirements for feat.
     
