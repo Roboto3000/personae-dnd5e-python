@@ -13,18 +13,6 @@ def get_allotment(_class):
         num_of_skills = 3
     return num_of_skills
 
-def get_skill_modifier(skill, scores):
-    """Returns skill ability modifier value for skill.
-    
-    Args:
-        skill (string): Name of skill to get ability modifier for.
-        scores (dict): Score to return a modifier for.
-        
-    Returns:
-        Returns a integer for skill modifier.
-    """
-    return scores[get_skill_ability(skill)]['Modifier']
-
 def has_requirements(feat, _class, a_prof, w_prof, scores):
     """Checks if scores, a_prof, w_prof has requirements for feat.
     
