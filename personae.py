@@ -82,6 +82,18 @@ def get_feats(omitted=[]):
             feats.remove(feat)
     return tuple(feats)
 
+def get_modifier(skill, scores):
+    """Returns skill ability modifier value for skill.
+    
+    Args:
+        skill (string): Name of skill to get ability modifier for.
+        scores (dict): Score to return a modifier for.
+        
+    Returns:
+        Returns a integer for skill modifier.
+    """
+    return scores[get_ability(skill)]['Modifier']
+
 def get_proficiency(_class, proficiency_flag='a'):
     """Returns armor/weapon proficiencies by _class.
     
