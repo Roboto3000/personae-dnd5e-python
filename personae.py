@@ -1,7 +1,6 @@
 # Personae RPG Library
 #
 # Author: Marcus T. Taylor <mtaylor3121@gmail.com>
-# Website: https://github.com/mtaylor33/Personae
 # Copyright: 2015, 2018
 #
 try:
@@ -142,22 +141,18 @@ def get_requirements(feat):
         Returns a dictionary of feat requirements.
     """
     return personae_feat[feat]
-        
-def get_modifier(score):
-    """Returns modifier for score.
-    
-    Returns:
-        Returns modifier value (score - 10)/2.
-    """
-    return (score - 10)/2
 
-def get_version():
-    """Returns the current version of Persona.
+def get_modifier(skill, scores):
+    """Returns skill ability modifier value for skill.
     
+    Args:
+        skill (string): Name of skill to get ability modifier for.
+        scores (dict): Score to return a modifier for.
+        
     Returns:
-        Returns version number as integer.
+        Returns a integer for skill modifier.
     """
-    return PERSONAE_VERSION
+    return scores[get_ability(skill)]['Modifier']
 
 def get_skills():
     """Returns list of character skills.
@@ -170,17 +165,13 @@ def get_skills():
     """
     return __myitems__(personae_skill)
 
-def get_skill_modifier(skill, scores):
-    """Returns skill ability modifier value for skill.
+def get_version():
+    """Returns the current version of Persona.
     
-    Args:
-        skill (string): Name of skill to get ability modifier for.
-        scores (dict): Score to return a modifier for.
-        
     Returns:
-        Returns a integer for skill modifier.
+        Returns version number as integer.
     """
-    return scores[get_ability(skill)]['Modifier']
+    return PERSONAE_VERSION
 
 def has_requirements(feat, _class, a_prof, w_prof, scores):
     """Checks if scores, a_prof, w_prof has requirements for feat.
@@ -255,14 +246,12 @@ if __name__ == '__main__':
     print get_classes()
     print get_feats()
     print get_requirements('Actor')
-    print get_modifier(20)
     print get_version()
     print get_bonus('Elf, Drow')
     print get_races()
     print get_ability('Acrobatics')
     print get_allotment('Fighter')
     print get_skills()
-    print get_skill_modifier('Acrobatics', scores)
     print wp
     print has_requirements('Spell Sniper', 'Fighter', ap, wp, scores)
     #print is_caster('Fighter', 3)
