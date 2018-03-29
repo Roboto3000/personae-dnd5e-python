@@ -160,25 +160,4 @@ def get_version():
 
 
 if __name__ == '__main__':
-    # PERSONAE DEBUG CODE
-    ap = get_proficiency('Cleric', 'a')
-    wp = get_proficiency('Fighter', 'w')
-    scores = {
-        'Strength': {'Modifier': 0, 'Score': 10}, 
-        'Dexterity': {'Modifier': -1, 'Score': 8}, 
-        'Constitution': {'Modifier': 2, 'Score': 15}, 
-        'Intelligence': {'Modifier': 0, 'Score': 11}, 
-        'Wisdom': {'Modifier': 1, 'Score': 12}, 
-        'Charisma': {'Modifier': 2, 'Score': 15}
-    }
-    print get_alignments()
-    print ap
-    print get_classes()
-    print get_feats()
-    print get_requirements('Actor')
     print get_version()
-    print get_bonus('Elf, Drow')
-    print get_races()
-    print get_ability('Acrobatics')
-    print get_skills()
-    print wp
