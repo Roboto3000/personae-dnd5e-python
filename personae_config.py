@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-# Personae RPG Library
-#
-# Author: Marcus T. Taylor <mtaylor3121@gmail.com>
-# Website: https://github.com/mtaylor33/Personae
-# Copyright: 2015, 2018
-#
-
-
 PERSONAE_VERSION = 20180203
 
 
