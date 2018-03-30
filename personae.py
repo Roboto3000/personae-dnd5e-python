@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 try:
     from personae_config import *
 except ImportError:
