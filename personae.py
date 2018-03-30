@@ -1,8 +1,3 @@
-# Personae RPG Library
-#
-# Author: Marcus T. Taylor <mtaylor3121@gmail.com>
-# Copyright: 2015, 2018
-#
 try:
     from personae_config import *
 except ImportError:
