@@ -6,15 +6,6 @@ except ImportError:
     exit('Failed to import required libraries! Halted.')
 
 
-def __myitems__(data):
-    try:
-        out = []
-        for item in data.iteritems():
-            out.append(item[0])
-        return tuple(out)
-    except AttributeError:
-        return None
-
 def get_ability(skill):
     """Returns primary ability name for skill.
     
