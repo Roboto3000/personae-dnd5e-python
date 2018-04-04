@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 try:
     from personae_config import *
+    from personae_standalone import *
 except ImportError:
-    exit("Configuration file 'personae_config.py' missing! Halted.")
+    exit('Failed to import required libraries! Halted.')
 
 
 def __myitems__(data):
