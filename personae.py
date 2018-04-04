@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 try:
     from personae_config import *
     from personae_standalone import *
