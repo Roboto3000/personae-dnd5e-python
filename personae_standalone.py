@@ -1,3 +1,12 @@
+def __myitems__(data):
+    try:
+        out = []
+        for item in data.iteritems():
+            out.append(item[0])
+        return tuple(out)
+    except AttributeError:
+        return None
+
 def get_allotment(_class):
     """Returns number of skills by _class.
     
