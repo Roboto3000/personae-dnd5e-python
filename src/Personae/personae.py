@@ -1,49 +1,49 @@
 try:
-    from personae_config import *
-    from personae_standalone import *
+	from personae_config import *
+	from personae_standalone import *
 except ImportError:
-    exit('Failed to import required libraries! Halted.')
+	exit('Failed to import required libraries! Halted.')
 
     
 class Personae:
-    
-    def get_ability(skill):
-        """Returns primary ability name for skill.
+	
+	def get_ability(skill):
+		"""Returns primary ability name for skill.
+		
+		Args:
+			skill (string): Skill to return primary ability for.
+		
+		Returns:
+			Returns a string name of the primary skill.
+		"""
+		return personae_skill[skill]['Ability']
+	
+	def get_alignments():
+		"""Returns list of character classes.
+		
+		Returns:
+			Returns a tuple of class names.
+		"""
+		return __myitems__(personae_alignment)
 
-        Args:
-            skill (string): Skill to return primary ability for.
+	def get_bonus(race):
+		"""Returns ability modifiers by race.
 
-        Returns:
-            Returns a string name of the primary skill.
-        """
-        return personae_skill[skill]['Ability']
-
-    def get_alignments():
-        """Returns list of character classes.
-
-        Returns:
-            Returns a tuple of class names.
-        """
-        return __myitems__(personae_alignment)
-
-    def get_bonus(race):
-        """Returns ability modifiers by race.
-
-        Args:
-            race (string): Race to retrieve racial bonus(es) for.
-
-        Returns:
-            Returns racial bonus(es) as dict or None if race not found.
-        """
-        try:
-            _bonus = personae_race[race]
-            bonus = {}
-            for ability,value in _bonus.iteritems():
-                if _bonus[ability] is not 0:
-                    bonus[ability] = value
-            return bonus
-        except KeyError:
-            return None
+		Args:
+			race (string): Race to retrieve racial bonus(es) for.
+			
+		Returns:
+			Returns racial bonus(es) as dict or None if race not found.
+		"""
+		try:
+			_bonus = personae_race[race]
+			bonus = {}
+			for ability,value in _bonus.iteritems():
+				if _bonus[ability] is not 0:
+					bonus[ability] = value
+					return bonus
+				except KeyError:
+					return None
 
     def get_classes():
         """Returns list of character classes.
