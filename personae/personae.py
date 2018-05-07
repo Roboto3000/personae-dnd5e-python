@@ -44,7 +44,7 @@ def get_modifier(score):
 			Score to generate modifier for.
 			
 	Returns
-	----------
+	-------
 		int
 			Returns modifier value (score - 10)/2.
 	"""
@@ -52,15 +52,17 @@ def get_modifier(score):
 
 def is_caster(_class, level=1):
 	"""
-	Returns True if _class is spellcaster; False if not.
+	Returns whether _class is a spellcaster.
 	
 	Parameters
 	----------
 		_class : string
 			Class to check if caster.
+		level : int
+			Level of _class; defaults to 1.
 		
 	Returns
-	----------
+	-------
 		bool
 			True if caster; False otherwise.
 	"""
