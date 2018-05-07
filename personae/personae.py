@@ -5,6 +5,21 @@ except ImportError:
 
 
 def __myitems__(data):
+	"""
+	Returns tuble of data from data source.
+	
+	Parameters
+	----------
+	
+		data : dict
+			Dictionary of DnD data.
+	
+	Returns
+	-------
+	
+		tuple
+			Tuple of DnD game material.
+	"""
 	try:
 		out = []
 		for item in data.iteritems():
