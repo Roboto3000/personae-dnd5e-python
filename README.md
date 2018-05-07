@@ -7,7 +7,7 @@
 ## INDEX
 
 1. INTRODUCTION
-2. CHANGELOG
+2. [CHANGELOG](CHANGELOG.md)
 
 
 ### 1. Introduction
