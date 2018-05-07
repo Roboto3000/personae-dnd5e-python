@@ -44,29 +44,29 @@ class Personae:
 					return bonus
 				except KeyError:
 					return None
+				
+	def get_classes():
+		"""Returns list of character classes.
+		
+		Returns:
+		Returns a tuple of class names.
+		"""
+		return __myitems__(personae_class)
+	
+	def get_feats(omitted=[]):
+		"""Returns omitted list of character feats.
 
-    def get_classes():
-        """Returns list of character classes.
+		Args:
+			omitted (list): List of feats to exclude.
 
-        Returns:
-            Returns a tuple of class names.
-        """
-        return __myitems__(personae_class)
-
-    def get_feats(omitted=[]):
-        """Returns omitted list of character feats.
-
-        Args:
-            omitted (list): List of feats to exclude.
-
-        Returns:
-            Returns a list of feats sans any omitted feats.
-        """
-        feats = list(__myitems__(personae_feat))
-        if len(omitted):
-            for feat in omitted:
-                feats.remove(feat)
-        return tuple(feats)
+		Returns:
+			Returns a list of feats sans any omitted feats.
+		"""
+		feats = list(__myitems__(personae_feat))
+		if len(omitted):
+			for feat in omitted:
+				feats.remove(feat)
+		return tuple(feats)
 
     def get_modifier(skill, scores):
         """Returns skill ability modifier value for skill.
@@ -183,6 +183,6 @@ class Personae:
 
 
 if __name__ == '__main__':
-    personae = Personae()
-    print personae.get_version()
+	personae = Personae()
+	print personae.get_version()
     
