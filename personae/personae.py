@@ -56,7 +56,6 @@ def is_caster(_class, level=1):
 
     
 class Personae:
-	
 	def get_ability(skill):
 		"""Returns primary ability name for skill.
 		
