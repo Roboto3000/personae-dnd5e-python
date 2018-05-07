@@ -79,99 +79,99 @@ class Personae:
 			Returns a integer for skill modifier.
 		"""
 		return scores[get_ability(skill)]['Modifier']
+	
+	def get_proficiency(_class, proficiency_flag='a'):
+		"""Returns armor/weapon proficiencies by _class.
 
-    def get_proficiency(_class, proficiency_flag='a'):
-        """Returns armor/weapon proficiencies by _class.
+		Args:
+			_class (string): Name of class to look for proficiencies.
+			proficiency_flag (string): Proficiency type (armor, weapon) to request.
+				Flag 'a': Armor Proficiencies
+				Flag 'w': Weapon Proficiencies
 
-        Args:
-            _class (string): Name of class to look for proficiencies.
-            proficiency_flag (string): Proficiency type (armor, weapon) to request.
-                Flag 'a': Armor Proficiencies
-                Flag 'w': Weapon Proficiencies
+		Returns:
+			Returns a list of armor proficiencies or None if not requested.
+		"""
+		try:
+			if proficiency_flag is 'a':
+				proficiency = personae_class[_class]['Armors'].split(',')
+			elif proficiency_flag is 'w':
+				proficiency = personae_class[_class]['Weapons'].split(',')
+			else:
+				raise KeyError
+			if '-' not in proficiency:
+				return tuple(proficiency)
+			else:
+				return ()
+		except KeyError:
+			return None
 
-        Returns:
-            Returns a list of armor proficiencies or None if not requested.
-        """
-        try:
-            if proficiency_flag is 'a':
-                proficiency = personae_class[_class]['Armors'].split(',')
-            elif proficiency_flag is 'w':
-                proficiency = personae_class[_class]['Weapons'].split(',')
-            else:
-                raise KeyError
-            if '-' not in proficiency:
-                return tuple(proficiency)
-            else:
-                return ()
-        except KeyError:
-            return None
+	def get_races():
+		"""Returns list of character races.
 
-    def get_races():
-        """Returns list of character races.
+		Returns:
+			Returns a tuple of race names.
+		"""
+		return __myitems__(personae_race)
 
-        Returns:
-            Returns a tuple of race names.
-        """
-        return __myitems__(personae_race)
+	def get_requirements(feat):
+		"""Return requirements for feat.
 
-    def get_requirements(feat):
-        """Return requirements for feat.
+		Args:
+			feat (string): Feat to find requirements for.
 
-        Args:
-            feat (string): Feat to find requirements for.
+		Returns:
+			Returns a dictionary of feat requirements.
+		"""
+		return personae_feat[feat]
+	
+	def get_skills():
+		"""Returns list of character skills.
 
-        Returns:
-            Returns a dictionary of feat requirements.
-        """
-        return personae_feat[feat]
+		Args:
+			_class (string): Class to return skills for.
 
-    def get_skills():
-        """Returns list of character skills.
+		Returns:
+			Returns a list of class names by _class.
+		"""
+		return __myitems__(personae_skill)
 
-        Args:
-            _class (string): Class to return skills for.
+	def has_requirements(feat, _class, a_prof, w_prof, scores):
+		"""Checks if scores, a_prof, w_prof meet requirements for feat.
 
-        Returns:
-            Returns a list of class names by _class.
-        """
-        return __myitems__(personae_skill)
+		Args:
+			feat (string): Feat to check requirements for.
+			_class (string): Class to check requirements for.
+			a_prof (list): List of armor proficiencies.
+			w_prof (list): List of weapon proficiencies.
+			scores (dict): Dictionary of ability scores.
 
-    def has_requirements(feat, _class, a_prof, w_prof, scores):
-        """Checks if scores, a_prof, w_prof meet requirements for feat.
-
-        Args:
-            feat (string): Feat to check requirements for.
-            _class (string): Class to check requirements for.
-            a_prof (list): List of armor proficiencies.
-            w_prof (list): List of weapon proficiencies.
-            scores (dict): Dictionary of ability scores.
-
-        Returns:
-            True if requirements met; False otherwise.
-        """
-        if feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
-            if not is_caster(_class):
-                return False
-        require = get_requirements(feat)
-        if require['Class'] is not '-':
-            if _class not in require['Class'].split(','):
-                return False
-        if require['Proficiency'] is not '-':
-            if require['Proficiency'] not in a_prof or w_prof:
-                return False
-        if scores['Strength']['Score'] < require['Strength']:
-            return False
-        if scores['Dexterity']['Score'] < require['Dexterity']:
-            return False
-        if scores['Constitution']['Score'] < require['Constitution']:
-            return False
-        if scores['Intelligence']['Score'] < require['Intelligence']:
-            return False
-        if scores['Wisdom']['Score'] < require['Wisdom']:
-            return False
-        if scores['Charisma']['Score'] < require['Charisma']:
-            return False
-        return True
+		Returns:
+			True if requirements met; False otherwise.
+		"""
+		if feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
+			if not is_caster(_class):
+				return False
+			require = get_requirements(feat)
+			if require['Class'] is not '-':
+				if _class not in require['Class'].split(','):
+					return False
+			if require['Proficiency'] is not '-':
+				if require['Proficiency'] not in a_prof or w_prof:
+					return False
+			if scores['Strength']['Score'] < require['Strength']:
+				return False
+			if scores['Dexterity']['Score'] < require['Dexterity']:
+				return False
+			if scores['Constitution']['Score'] < require['Constitution']:
+				return False
+			if scores['Intelligence']['Score'] < require['Intelligence']:
+				return False
+			if scores['Wisdom']['Score'] < require['Wisdom']:
+				return False
+			if scores['Charisma']['Score'] < require['Charisma']:
+				return False
+			return True
 
 
 if __name__ == '__main__':
