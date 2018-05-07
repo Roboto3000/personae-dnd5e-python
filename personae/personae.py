@@ -185,14 +185,14 @@ class Personae:
 		"""
 		return __myitems__(personae_skill)
 
-	def has_requirements(feat, _class, a_prof, w_prof, scores):
-		"""Checks if scores, a_prof, w_prof meet requirements for feat.
+	def has_requirements(feat, _class, armor, weapon, scores):
+		"""Checks if scores, armor, weapon meet feat requirements.
 
 		Args:
 			feat (string): Feat to check requirements for.
 			_class (string): Class to check requirements for.
-			a_prof (list): List of armor proficiencies.
-			w_prof (list): List of weapon proficiencies.
+			armor (list): List of armor proficiencies.
+			weapon (list): List of weapon proficiencies.
 			scores (dict): Dictionary of ability scores.
 
 		Returns:
@@ -206,7 +206,7 @@ class Personae:
 				if _class not in require['Class'].split(','):
 					return False
 			if require['Proficiency'] is not '-':
-				if require['Proficiency'] not in a_prof or w_prof:
+				if require['Proficiency'] not in armor or weapon:
 					return False
 			if scores['Strength']['Score'] < require['Strength']:
 				return False
