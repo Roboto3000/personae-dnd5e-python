@@ -1,6 +1,7 @@
 # Personae RPG Library
 
-**Author:** Marcus T. Taylor <mtaylor3121@gmail.com>
+**Author:** Marcus T. Taylor <mtaylor3121@gmail.com>\
+**Version:** 20180203
 
 
 ## INDEX
