@@ -106,11 +106,12 @@ def get_requirements(feat):
 	return personae_feat[feat]
 
     
-class PersonaeClassFeats:
-	def __init__(cls, **kwargs):
+class PersonaeClassFeats(Personae):
+	def __init__(cls, feat, **kwargs):
 		cls.ability = 'ability' in kwargs and kwargs['ability'] or None
 		cls.armor = 'armor' in kwargs and kwargs['armor'] or None
 		cls._class = 'class' in kwargs and kwargs['_class'] or None
+		cls.feat = feat
 		cls.weapon = 'weapon' in kwargs and kwargs['weapon'] or None
 	
 	def get_proficiency(cls, proficiency_flag='a'):
@@ -140,81 +141,67 @@ class PersonaeClassFeats:
 		else:
 			return ()
 
-	def has_requirements(cls, feat):
+	def has_requirements(cls):
 		"""
 		Checks if scores, armor, weapon meet feat requirements.
-
-		Parameters
-		----------
-			feat : string
-				Feat to check requirements for.
 
 		Returns
 		-------
 			bool
 				True if requirements met; False otherwise.
 		"""
-		if feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
+		if cls.feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
 			if not is_caster(self._class):
 				return False
-		require = get_requirements(feat)
+		require = get_requirements(cls.feat)
 		if require['Class'] is not '-':
 			if self._class not in require['Class'].split(','):
 				return False
 		if require['Proficiency'] is not '-':
 			if require['Proficiency'] not in cls.armor or cls.weapon:
 				return False
-		if cls.ability['Strength']['Score'] < require['Strength']:
+		if cls.get_score('Strength') < require['Strength']:
 			return False
-		if cls.ability['Dexterity']['Score'] < require['Dexterity']:
+		if cls.get_score('Dexterity') < require['Dexterity']:
 			return False
-		if cls.ability['Constitution']['Score'] < require['Constitution']:
+		if cls.get_score('Constitution') < require['Constitution']:
 			return False
-		if cls.ability['Intelligence']['Score'] < require['Intelligence']:
+		if cls.get_score('Intelligence') < require['Intelligence']:
 			return False
-		if cls.ability['Wisdom']['Score'] < require['Wisdom']:
+		if cls.get_score('Wisdom') < require['Wisdom']:
 			return False
-		if cls.ability['Charisma']['Score'] < require['Charisma']:
+		if cls.get_score('Charisma') < require['Charisma']:
 			return False
 		return True
 
 
 class PersonaeClassSkills:
-	def __init__(cls, **kwargs):
-		cls.race = 'race' in kwargs and kwargs['race'] or None
+	def __init__(cls, skill, **kwargs):
 		cls.ability = 'ability' in kwargs and kwargs['ability'] or None
+		cls.race = 'race' in kwargs and kwargs['race'] or None
+		cls.skill = skill
 
-	def get_ability(cls, skill):
+	def get_ability(cls):
 		"""
 		Returns primary ability name for skill.
-		
-		Parameters
-		----------
-			skill : string
-				Skill to return primary ability for.
 		
 		Returns
 		-------
 			string
 				Returns a string name of the primary skill.
 		"""
-		return personae_skill[skill]['Ability']
+		return personae_skill[cls.skill]['Ability']
 
-	def get_modifier(cls, skill):
+	def get_modifier(cls):
 		"""
 		Returns skill ability modifier value for skill.
-		
-		Parameters
-		----------
-			skill : string
-				Name of skill to get ability modifier for.
 			
 		Returns
 		-------
 			int
 				Returns a modifier for the skill.
 		"""
-		return cls.ability[cls.get_ability(skill)]['Modifier']
+		return cls.ability[cls.get_ability()]['Modifier']
 	
 
 class Personae:
@@ -294,7 +281,18 @@ class Personae:
 				Returns a tuple of race names.
 		"""
 		return __myitems__(personae_race)
-
+		
+	def get_score(cls, ability):
+		"""
+		Returns ability score.
+		
+		Returns
+		-------
+			int
+				Returns ability score value.
+		"""
+		return cls.ability[ability]['Score']
+	
 	def get_skills(cls):
 		"""
 		Returns list of character skills.
