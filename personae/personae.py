@@ -1,12 +1,12 @@
 try:
 	from personae_config import *
 except ImportError:
-	exit('Failed to import required libraries! Halted.')
+	exit('Failed to import required library! Halted.')
 
 
 def __myitems__(data):
 	"""
-	Returns tuble of data from data source.
+	Returns tuple of data from data source.
 	
 	Parameters
 	----------
@@ -92,7 +92,7 @@ def is_caster(_class, level=1):
 
     
 class Personae:
-	def get_ability(skill):
+	def get_ability(cls, skill):
 		"""
 		Returns primary ability name for skill.
 		
@@ -108,7 +108,7 @@ class Personae:
 		"""
 		return personae_skill[skill]['Ability']
 	
-	def get_alignments():
+	def get_alignments(cls):
 		"""
 		Returns list of character classes.
 		
@@ -119,7 +119,7 @@ class Personae:
 		"""
 		return __myitems__(personae_alignment)
 
-	def get_bonus(race):
+	def get_bonus(cls, race):
 		"""
 		Returns ability modifiers by race.
 
@@ -140,10 +140,10 @@ class Personae:
 				if _bonus[ability] is not 0:
 					bonus[ability] = value
 					return bonus
-				except KeyError:
-					return None
+		except KeyError:
+			return None
 				
-	def get_classes():
+	def get_classes(cls):
 		"""
 		Returns list of character classes.
 		
@@ -154,7 +154,7 @@ class Personae:
 		"""
 		return __myitems__(personae_class)
 	
-	def get_feats(omitted=[]):
+	def get_feats(cls, omitted=[]):
 		"""
 		Returns omitted list of character feats.
 
@@ -174,7 +174,7 @@ class Personae:
 				feats.remove(feat)
 		return tuple(feats)
 	
-	def get_modifier(skill, scores):
+	def get_modifier(cls, skill, scores):
 		"""
 		Returns skill ability modifier value for skill.
 		
@@ -192,7 +192,7 @@ class Personae:
 		"""
 		return scores[get_ability(skill)]['Modifier']
 	
-	def get_proficiency(_class, proficiency_flag='a'):
+	def get_proficiency(cls, _class, proficiency_flag='a'):
 		"""
 		Returns armor/weapon proficiencies by _class.
 
@@ -207,24 +207,21 @@ class Personae:
 
 		Returns
 		-------
-			list
-				Returns a list of proficiencies; None if none requested.
+			tuple|None
+				Returns proficiencies, if found; None otherwise.
 		"""
-		try:
-			if proficiency_flag is 'a':
-				proficiency = personae_class[_class]['Armors'].split(',')
-			elif proficiency_flag is 'w':
-				proficiency = personae_class[_class]['Weapons'].split(',')
-			else:
-				raise KeyError
-			if '-' not in proficiency:
-				return tuple(proficiency)
-			else:
-				return ()
-		except KeyError:
+		if proficiency_flag is 'a':
+			proficiency = personae_class[_class]['Armors'].split(',')
+		elif proficiency_flag is 'w':
+			proficiency = personae_class[_class]['Weapons'].split(',')
+		else:
 			return None
+		if '-' not in proficiency:
+			return tuple(proficiency)
+		else:
+			return ()
 
-	def get_races():
+	def get_races(cls):
 		"""
 		Returns list of character races.
 
@@ -235,7 +232,7 @@ class Personae:
 		"""
 		return __myitems__(personae_race)
 
-	def get_requirements(feat):
+	def get_requirements(cls, feat):
 		"""Return requirements for feat.
 
 		Parameters
@@ -250,7 +247,7 @@ class Personae:
 		"""
 		return personae_feat[feat]
 	
-	def get_skills():
+	def get_skills(cls):
 		"""
 		Returns list of character skills.
 
@@ -266,7 +263,7 @@ class Personae:
 		"""
 		return __myitems__(personae_skill)
 
-	def has_requirements(feat, _class, armor, weapon, scores):
+	def has_requirements(cls, feat, _class, armor, weapon, scores):
 		"""
 		Checks if scores, armor, weapon meet feat requirements.
 
@@ -291,26 +288,26 @@ class Personae:
 		if feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
 			if not is_caster(_class):
 				return False
-			require = get_requirements(feat)
-			if require['Class'] is not '-':
-				if _class not in require['Class'].split(','):
-					return False
-			if require['Proficiency'] is not '-':
-				if require['Proficiency'] not in armor or weapon:
-					return False
-			if scores['Strength']['Score'] < require['Strength']:
+		require = get_requirements(feat)
+		if require['Class'] is not '-':
+			if _class not in require['Class'].split(','):
 				return False
-			if scores['Dexterity']['Score'] < require['Dexterity']:
+		if require['Proficiency'] is not '-':
+			if require['Proficiency'] not in armor or weapon:
 				return False
-			if scores['Constitution']['Score'] < require['Constitution']:
-				return False
-			if scores['Intelligence']['Score'] < require['Intelligence']:
-				return False
-			if scores['Wisdom']['Score'] < require['Wisdom']:
-				return False
-			if scores['Charisma']['Score'] < require['Charisma']:
-				return False
-			return True
+		if scores['Strength']['Score'] < require['Strength']:
+			return False
+		if scores['Dexterity']['Score'] < require['Dexterity']:
+			return False
+		if scores['Constitution']['Score'] < require['Constitution']:
+			return False
+		if scores['Intelligence']['Score'] < require['Intelligence']:
+			return False
+		if scores['Wisdom']['Score'] < require['Wisdom']:
+			return False
+		if scores['Charisma']['Score'] < require['Charisma']:
+			return False
+		return True
 
 
 if __name__ == '__main__':
