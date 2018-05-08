@@ -93,32 +93,45 @@ def is_caster(_class, level=1):
     
 class Personae:
 	def get_ability(skill):
-		"""Returns primary ability name for skill.
+		"""
+		Returns primary ability name for skill.
 		
-		Args:
-			skill (string): Skill to return primary ability for.
+		Parameters
+		----------
+			skill : string
+				Skill to return primary ability for.
 		
-		Returns:
-			Returns a string name of the primary skill.
+		Returns
+		-------
+			string
+				Returns a string name of the primary skill.
 		"""
 		return personae_skill[skill]['Ability']
 	
 	def get_alignments():
-		"""Returns list of character classes.
+		"""
+		Returns list of character classes.
 		
-		Returns:
-			Returns a tuple of class names.
+		Returns
+		-------
+			tuple
+				Returns a tuple of class names.
 		"""
 		return __myitems__(personae_alignment)
 
 	def get_bonus(race):
-		"""Returns ability modifiers by race.
+		"""
+		Returns ability modifiers by race.
 
-		Args:
-			race (string): Race to retrieve racial bonus(es) for.
+		Parameters
+		----------
+			race : string
+				Race to retrieve racial bonus(es) for.
 			
-		Returns:
-			Returns racial bonus(es) as dict or None if race not found.
+		Returns
+		-------
+			dict|None
+				Returns racial bonus(es) as dict or None if race not found.
 		"""
 		try:
 			_bonus = personae_race[race]
@@ -131,21 +144,29 @@ class Personae:
 					return None
 				
 	def get_classes():
-		"""Returns list of character classes.
+		"""
+		Returns list of character classes.
 		
-		Returns:
-		Returns a tuple of class names.
+		Returns
+		-------
+			tuple
+				Returns a collection of class names.
 		"""
 		return __myitems__(personae_class)
 	
 	def get_feats(omitted=[]):
-		"""Returns omitted list of character feats.
+		"""
+		Returns omitted list of character feats.
 
-		Args:
-			omitted (list): List of feats to exclude.
+		Parameters
+		----------
+			omitted : list
+				List value of feats to exclude.
 
-		Returns:
-			Returns a list of feats sans any omitted feats.
+		Returns
+		-------
+			list
+				Returns a list of feats sans any omitted feats.
 		"""
 		feats = list(__myitems__(personae_feat))
 		if len(omitted):
@@ -154,28 +175,40 @@ class Personae:
 		return tuple(feats)
 	
 	def get_modifier(skill, scores):
-		"""Returns skill ability modifier value for skill.
+		"""
+		Returns skill ability modifier value for skill.
 		
-		Args:
-			skill (string): Name of skill to get ability modifier for.
-			scores (dict): Score to return a modifier for.
+		Parameters
+		----------
+			skill : string
+				Name of skill to get ability modifier for.
+			scores : dict
+				Score to return a modifier for.
 			
-		Returns:
-			Returns a integer for skill modifier.
+		Returns
+		-------
+			int
+				Returns a modifier for the skill.
 		"""
 		return scores[get_ability(skill)]['Modifier']
 	
 	def get_proficiency(_class, proficiency_flag='a'):
-		"""Returns armor/weapon proficiencies by _class.
+		"""
+		Returns armor/weapon proficiencies by _class.
 
-		Args:
-			_class (string): Name of class to look for proficiencies.
-			proficiency_flag (string): Proficiency type (armor, weapon) to request.
-				Flag 'a': Armor Proficiencies
-				Flag 'w': Weapon Proficiencies
+		Parameters
+		----------
+			_class : string
+				Name of class to look for proficiencies.
+			proficiency_flag : string
+				Proficiency type (armor, weapon) to request.
+					Flag 'a': Armor Proficiencies
+					Flag 'w': Weapon Proficiencies
 
-		Returns:
-			Returns a list of armor proficiencies or None if not requested.
+		Returns
+		-------
+			list
+				Returns a list of proficiencies; None if none requested.
 		"""
 		try:
 			if proficiency_flag is 'a':
@@ -192,47 +225,68 @@ class Personae:
 			return None
 
 	def get_races():
-		"""Returns list of character races.
+		"""
+		Returns list of character races.
 
-		Returns:
-			Returns a tuple of race names.
+		Returns
+		-------
+			tuple
+				Returns a tuple of race names.
 		"""
 		return __myitems__(personae_race)
 
 	def get_requirements(feat):
 		"""Return requirements for feat.
 
-		Args:
-			feat (string): Feat to find requirements for.
+		Parameters
+		----------
+			feat : string
+				Feat to find requirements for.
 
-		Returns:
-			Returns a dictionary of feat requirements.
+		Returns
+		-------
+			dict
+				Returns a dictionary of feat requirements.
 		"""
 		return personae_feat[feat]
 	
 	def get_skills():
-		"""Returns list of character skills.
+		"""
+		Returns list of character skills.
 
-		Args:
-			_class (string): Class to return skills for.
+		Parameters
+		----------
+			_class : string
+				Class to return skills for.
 
-		Returns:
-			Returns a list of class names by _class.
+		Returns
+		-------
+			list
+				Returns a list of class names by _class.
 		"""
 		return __myitems__(personae_skill)
 
 	def has_requirements(feat, _class, armor, weapon, scores):
-		"""Checks if scores, armor, weapon meet feat requirements.
+		"""
+		Checks if scores, armor, weapon meet feat requirements.
 
-		Args:
-			feat (string): Feat to check requirements for.
-			_class (string): Class to check requirements for.
-			armor (list): List of armor proficiencies.
-			weapon (list): List of weapon proficiencies.
-			scores (dict): Dictionary of ability scores.
+		Parameters
+		----------
+			feat : string
+				Feat to check requirements for.
+			_class : string
+				Class to check requirements for.
+			armor : list
+				List of armor proficiencies.
+			weapon : list
+				List of weapon proficiencies.
+			scores : dict
+				Dictionary of ability scores.
 
-		Returns:
-			True if requirements met; False otherwise.
+		Returns
+		-------
+			bool
+				True if requirements met; False otherwise.
 		"""
 		if feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
 			if not is_caster(_class):
