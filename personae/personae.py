@@ -90,22 +90,35 @@ def is_caster(_class, level=1):
 		return True
 	return False
 
+def get_requirements(feat):
+	"""Return requirements for feat.
+
+	Parameters
+	----------
+		feat : string
+			Feat to find requirements for.
+
+	Returns
+	-------
+		dict
+			Returns a dictionary of feat requirements.
+	"""
+	return personae_feat[feat]
+
     
 class PersonaeClassFeats:
 	def __init__(cls, **kwargs):
-		cls.race = 'race' in kwargs and kwargs['race'] or None
 		cls.ability = 'ability' in kwargs and kwargs['ability'] or None
 		cls.armor = 'armor' in kwargs and kwargs['armor'] or None
+		cls._class = 'class' in kwargs and kwargs['_class'] or None
 		cls.weapon = 'weapon' in kwargs and kwargs['weapon'] or None
 	
-	def get_proficiency(cls, _class, proficiency_flag='a'):
+	def get_proficiency(cls, proficiency_flag='a'):
 		"""
 		Returns armor/weapon proficiencies by _class.
 
 		Parameters
 		----------
-			_class : string
-				Name of class to look for proficiencies.
 			proficiency_flag : string
 				Proficiency type (armor, weapon) to request.
 					Flag 'a': Armor Proficiencies
@@ -117,9 +130,9 @@ class PersonaeClassFeats:
 				Returns proficiencies, if found; None otherwise.
 		"""
 		if proficiency_flag is 'a':
-			proficiency = personae_class[_class]['Armors'].split(',')
+			proficiency = personae_class[self._class]['Armors'].split(',')
 		elif proficiency_flag is 'w':
-			proficiency = personae_class[_class]['Weapons'].split(',')
+			proficiency = personae_class[self._class]['Weapons'].split(',')
 		else:
 			return None
 		if '-' not in proficiency:
@@ -127,22 +140,7 @@ class PersonaeClassFeats:
 		else:
 			return ()
 
-	def get_requirements(cls, feat):
-		"""Return requirements for feat.
-
-		Parameters
-		----------
-			feat : string
-				Feat to find requirements for.
-
-		Returns
-		-------
-			dict
-				Returns a dictionary of feat requirements.
-		"""
-		return personae_feat[feat]
-
-	def has_requirements(cls, feat, _class):
+	def has_requirements(cls, feat):
 		"""
 		Checks if scores, armor, weapon meet feat requirements.
 
@@ -150,8 +148,6 @@ class PersonaeClassFeats:
 		----------
 			feat : string
 				Feat to check requirements for.
-			_class : string
-				Class to check requirements for.
 
 		Returns
 		-------
@@ -159,11 +155,11 @@ class PersonaeClassFeats:
 				True if requirements met; False otherwise.
 		"""
 		if feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
-			if not is_caster(_class):
+			if not is_caster(self._class):
 				return False
 		require = get_requirements(feat)
 		if require['Class'] is not '-':
-			if _class not in require['Class'].split(','):
+			if self._class not in require['Class'].split(','):
 				return False
 		if require['Proficiency'] is not '-':
 			if require['Proficiency'] not in cls.armor or cls.weapon:
