@@ -92,6 +92,11 @@ def is_caster(_class, level=1):
 
     
 class Personae:
+	def __init__(cls, **kwargs):
+		cls.ability_scores = 'ability' in kwargs and kwargs['ability'] or None
+		cls.armor_proficiency = 'armor' in kwargs and kwargs['armor'] or None
+		cls.weapon_proficiency = 'weapon' in kwargs and kwargs['weapon'] or None
+	
 	def get_ability(cls, skill):
 		"""
 		Returns primary ability name for skill.
@@ -263,7 +268,7 @@ class Personae:
 		"""
 		return __myitems__(personae_skill)
 
-	def has_requirements(cls, feat, _class, armor, weapon, scores):
+	def has_requirements(cls, feat, _class):
 		"""
 		Checks if scores, armor, weapon meet feat requirements.
 
@@ -273,12 +278,6 @@ class Personae:
 				Feat to check requirements for.
 			_class : string
 				Class to check requirements for.
-			armor : list
-				List of armor proficiencies.
-			weapon : list
-				List of weapon proficiencies.
-			scores : dict
-				Dictionary of ability scores.
 
 		Returns
 		-------
@@ -293,19 +292,19 @@ class Personae:
 			if _class not in require['Class'].split(','):
 				return False
 		if require['Proficiency'] is not '-':
-			if require['Proficiency'] not in armor or weapon:
+			if require['Proficiency'] not in cls.armor_proficiency or cls.weapon.proficiency:
 				return False
-		if scores['Strength']['Score'] < require['Strength']:
+		if cls.ability_scores['Strength']['Score'] < require['Strength']:
 			return False
-		if scores['Dexterity']['Score'] < require['Dexterity']:
+		if cls.ability_scores['Dexterity']['Score'] < require['Dexterity']:
 			return False
-		if scores['Constitution']['Score'] < require['Constitution']:
+		if cls.ability_scores['Constitution']['Score'] < require['Constitution']:
 			return False
-		if scores['Intelligence']['Score'] < require['Intelligence']:
+		if cls.ability_scores['Intelligence']['Score'] < require['Intelligence']:
 			return False
-		if scores['Wisdom']['Score'] < require['Wisdom']:
+		if cls.ability_scores['Wisdom']['Score'] < require['Wisdom']:
 			return False
-		if scores['Charisma']['Score'] < require['Charisma']:
+		if cls.ability_scores['Charisma']['Score'] < require['Charisma']:
 			return False
 		return True
 
