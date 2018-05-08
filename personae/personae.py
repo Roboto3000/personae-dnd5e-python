@@ -106,7 +106,7 @@ def get_requirements(feat):
 	return personae_feat[feat]
 
     
-class PersonaeClassFeats(Personae):
+class PersonaeClassFeats:
 	def __init__(cls, feat, **kwargs):
 		cls.ability = 'ability' in kwargs and kwargs['ability'] or None
 		cls.armor = 'armor' in kwargs and kwargs['armor'] or None
@@ -204,7 +204,12 @@ class PersonaeClassSkills:
 		return cls.ability[cls.get_ability()]['Modifier']
 	
 
-class Personae:
+class Personae(PersonaeClassFeats, PersonaeClassSkills):
+	def __init__(cls):
+		#super(PersonaeClassFeats, self).__init__()
+		#super(PersonaeClassSkills, self).__init__()
+		pass
+	
 	def get_alignments(cls):
 		"""
 		Returns list of character classes.
