@@ -112,6 +112,15 @@ def get_requirements(feat):
 
 class PersonaeClassFeats:
   def __init__(cls, feat, **kwargs):
+		try:
+			if not isinstance(kwargs['ability'], tuple):
+				raise TypeError
+			if len(kwargs['ability']) <> 6:
+				raise ValueError
+		except TypeError:
+			exit("Value 'ability' must be a tuple!")
+		except ValueError:
+			exit("Value 'ability' requires 6 values!")
     cls.ability = {}
     stats = ('Strength', 'Dexterity', 'Constitution', 
             'Intelligence', 'Wisdom', 'Charisma')
@@ -221,6 +230,15 @@ class PersonaeClassFeats:
 
 class PersonaeClassSkills:
 	def __init__(cls, skill, **kwargs):
+		try:
+			if not isinstance(kwargs['ability'], tuple):
+				raise TypeError
+			if len(kwargs['ability']) <> 6:
+				raise ValueError
+		except TypeError:
+			exit("Value 'ability' must be a tuple!")
+		except ValueError:
+			exit("Value 'ability' requires 6 values!")
     cls.ability = {}
     stats = ('Strength', 'Dexterity', 'Constitution', 
             'Intelligence', 'Wisdom', 'Charisma')
