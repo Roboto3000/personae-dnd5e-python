@@ -1,5 +1,5 @@
 try:
-	from personae_config import *
+	from personae_source import *
 except ImportError:
 	exit('Failed to import required library! Halted.')
 
