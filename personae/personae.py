@@ -7,16 +7,16 @@ except ImportError:
 def __myitems__(data):
 	"""
 	Returns tuple of data from data source.
-	
+
 	Parameters
 	----------
-	
+
 		data : dict
 			Dictionary of DnD data.
-	
+
 	Returns
 	-------
-	
+
 		tuple
 			Tuple of DnD game material.
 	"""
@@ -28,15 +28,16 @@ def __myitems__(data):
 	except AttributeError:
 		return None
 
+
 def get_allotment(_class):
 	"""
 	Returns number of skills by _class.
-	
+
 	Parameters
 	----------
 		_class : string
 			Class to return skill allotment for.
-		
+
 	Returns
 	-------
 		int
@@ -49,15 +50,16 @@ def get_allotment(_class):
 		num_of_skills = 3
 	return num_of_skills
 
+
 def get_modifier(score):
 	"""
 	Generates ability modifier by score.
-	
+
 	Parameters
 	----------
 		score : int
 			Score to generate modifier for.
-			
+
 	Returns
 	-------
 		int
@@ -65,23 +67,24 @@ def get_modifier(score):
 	"""
 	return (score - 10)/2
 
+
 def is_caster(_class, level=1):
 	"""
 	Returns whether _class is a spellcaster.
-	
+
 	Parameters
 	----------
 		_class : string
 			Class to check if caster.
 		level : int
 			Level of _class; defaults to 1.
-		
+
 	Returns
 	-------
 		bool
 			True if caster; False otherwise.
 	"""
-	casters = ('Bard','Cleric','Druid','Sorcerer','Warlock','Wizard')
+	casters = ('Bard', 'Cleric', 'Druid', 'Sorcerer', 'Warlock', 'Wizard')
 	if _class in casters:
 		return True
 	if _class in ('Fighter', 'Rogue') and level >= 3:
@@ -89,6 +92,7 @@ def is_caster(_class, level=1):
 	if _class in ('Paladin', 'Ranger') and level >= 2:
 		return True
 	return False
+
 
 def get_requirements(feat):
 	"""Return requirements for feat.
@@ -105,22 +109,40 @@ def get_requirements(feat):
 	"""
 	return personae_feat[feat]
 
-    
-class PersonaeClassFeats:
-	def __init__(cls, feat, **kwargs):
-		cls.ability = 'ability' in kwargs and kwargs['ability'] or None
-		cls.armor = 'armor' in kwargs and kwargs['armor'] or None
-		cls._class = 'class' in kwargs and kwargs['_class'] or None
-		cls.feat = feat
-		cls.weapon = 'weapon' in kwargs and kwargs['weapon'] or None
-	
-	def get_proficiency(cls, proficiency_flag='a'):
-		"""
-		Returns armor/weapon proficiencies by _class.
 
-		Parameters
-		----------
-			proficiency_flag : string
+class PersonaeClassFeats:
+  def __init__(cls, feat, **kwargs):
+    cls.ability = {}
+    stats = ('Strength', 'Dexterity', 'Constitution', 
+            'Intelligence', 'Wisdom', 'Charisma')
+    for i,s in enumerate(kwargs['ability']):
+      cls.ability[stats[i]] = { 
+        'Score':s, 
+        'Modifier':get_modifier(s)
+      }
+    cls._class = '_class' in kwargs and kwargs['_class'] or None
+    cls.feat = feat
+    cls.armor = cls.get_proficiency('a')
+    cls.weapon = cls.get_proficiency('w')
+
+  def get_armors(cls):
+    """
+    Returns armor proficiencies.
+    
+    Returns
+    -------
+      tuple
+        Returns a tuple of armor proficiencies.
+    """
+    return cls.armor
+  
+  def get_proficiency(cls, proficiency_flag='a'):
+    """
+    Returns armor/weapon proficiencies by _class.
+
+    Parameters
+    ----------
+      proficiency_flag : string
 				Proficiency type (armor, weapon) to request.
 					Flag 'a': Armor Proficiencies
 					Flag 'w': Weapon Proficiencies
@@ -130,18 +152,40 @@ class PersonaeClassFeats:
 			tuple|None
 				Returns proficiencies, if found; None otherwise.
 		"""
-		if proficiency_flag is 'a':
-			proficiency = personae_class[self._class]['Armors'].split(',')
-		elif proficiency_flag is 'w':
-			proficiency = personae_class[self._class]['Weapons'].split(',')
-		else:
-			return None
-		if '-' not in proficiency:
-			return tuple(proficiency)
-		else:
-			return ()
+    if proficiency_flag is 'a':
+      proficiency = personae_class[cls._class]['Armors'].split(',')
+    elif proficiency_flag is 'w':
+      proficiency = personae_class[cls._class]['Weapons'].split(',')
+    else:
+      return None
+    if '-' not in proficiency:
+      return tuple(proficiency)
+    else:
+      return ()
+    
+  def get_score(cls, ability):
+    """
+    Returns ability score.
+    
+    Returns
+    -------
+      int
+        Returns ability score value.
+    """
+    return cls.ability[ability]['Score']
+  
+  def get_weapons(cls):
+    """
+    Returns weapon proficiencies.
+    
+    Returns
+    -------
+      tuple
+        Returns a tuple of weapon proficiencies.
+    """
+    return cls.weapon
 
-	def has_requirements(cls):
+  def has_requirements(cls):
 		"""
 		Checks if scores, armor, weapon meet feat requirements.
 
@@ -151,14 +195,14 @@ class PersonaeClassFeats:
 				True if requirements met; False otherwise.
 		"""
 		if cls.feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
-			if not is_caster(self._class):
+			if not is_caster(cls._class):
 				return False
 		require = get_requirements(cls.feat)
 		if require['Class'] is not '-':
-			if self._class not in require['Class'].split(','):
+			if cls._class not in require['Class'].split(','):
 				return False
 		if require['Proficiency'] is not '-':
-			if require['Proficiency'] not in cls.armor or cls.weapon:
+			if require['Proficiency'] not in cls.get_armors() or cls.get_weapons():
 				return False
 		if cls.get_score('Strength') < require['Strength']:
 			return False
@@ -177,7 +221,14 @@ class PersonaeClassFeats:
 
 class PersonaeClassSkills:
 	def __init__(cls, skill, **kwargs):
-		cls.ability = 'ability' in kwargs and kwargs['ability'] or None
+    cls.ability = {}
+    stats = ('Strength', 'Dexterity', 'Constitution', 
+            'Intelligence', 'Wisdom', 'Charisma')
+    for i,s in enumerate(kwargs['ability']):
+      cls.ability[stats[i]] = { 
+        'Score':s, 
+        'Modifier':get_modifier(s)
+      }
 		cls.race = 'race' in kwargs and kwargs['race'] or None
 		cls.skill = skill
 
@@ -206,8 +257,8 @@ class PersonaeClassSkills:
 
 class Personae(PersonaeClassFeats, PersonaeClassSkills):
 	def __init__(cls):
-		#super(PersonaeClassFeats, self).__init__()
-		#super(PersonaeClassSkills, self).__init__()
+		# super(PersonaeClassFeats, cls).__init__()
+		# super(PersonaeClassSkills, cls).__init__()
 		pass
 	
 	def get_alignments(cls):
