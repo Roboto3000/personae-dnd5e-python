@@ -4,7 +4,7 @@ except ImportError:
 	exit('Failed to import required library! Halted.')
 
 
-def __myitems__(data):
+def _read(data):
 	"""
 	Returns tuple of data from data source.
 
@@ -112,15 +112,15 @@ def get_requirements(feat):
 
 class PersonaeClassFeats:
   def __init__(cls, feat, **kwargs):
-		try:
-			if not isinstance(kwargs['ability'], tuple):
-				raise TypeError
-			if len(kwargs['ability']) <> 6:
-				raise ValueError
-		except TypeError:
-			exit("Value 'ability' must be a tuple!")
-		except ValueError:
-			exit("Value 'ability' requires 6 values!")
+    try:
+      if not isinstance(kwargs['ability'], tuple):
+        raise TypeError
+      if len(kwargs['ability']) <> 6:
+        raise ValueError
+    except TypeError:
+      exit("Value 'ability' must be a tuple!")
+    except ValueError:
+      exit("Value 'ability' requires 6 values!")
     cls.ability = {}
     stats = ('Strength', 'Dexterity', 'Constitution', 
             'Intelligence', 'Wisdom', 'Charisma')
@@ -229,16 +229,16 @@ class PersonaeClassFeats:
 
 
 class PersonaeClassSkills:
-	def __init__(cls, skill, **kwargs):
-		try:
-			if not isinstance(kwargs['ability'], tuple):
-				raise TypeError
-			if len(kwargs['ability']) <> 6:
-				raise ValueError
-		except TypeError:
-			exit("Value 'ability' must be a tuple!")
-		except ValueError:
-			exit("Value 'ability' requires 6 values!")
+  def __init__(cls, skill, **kwargs):
+    try:
+      if not isinstance(kwargs['ability'], tuple):
+        raise TypeError
+      if len(kwargs['ability']) <> 6:
+        raise ValueError
+    except TypeError:
+      exit("Value 'ability' must be a tuple!")
+    except ValueError:
+      exit("Value 'ability' requires 6 values!")
     cls.ability = {}
     stats = ('Strength', 'Dexterity', 'Constitution', 
             'Intelligence', 'Wisdom', 'Charisma')
@@ -247,10 +247,10 @@ class PersonaeClassSkills:
         'Score':s, 
         'Modifier':get_modifier(s)
       }
-		cls.race = 'race' in kwargs and kwargs['race'] or None
-		cls.skill = skill
-
-	def get_ability(cls):
+    cls.race = 'race' in kwargs and kwargs['race'] or None
+    cls.skill = skill
+    
+  def get_ability(cls):
 		"""
 		Returns primary ability name for skill.
 		
@@ -260,8 +260,8 @@ class PersonaeClassSkills:
 				Returns a string name of the primary skill.
 		"""
 		return personae_skill[cls.skill]['Ability']
-
-	def get_modifier(cls):
+  
+  def get_modifier(cls):
 		"""
 		Returns skill ability modifier value for skill.
 			
@@ -288,7 +288,7 @@ class Personae(PersonaeClassFeats, PersonaeClassSkills):
 			tuple
 				Returns a tuple of class names.
 		"""
-		return __myitems__(personae_alignment)
+		return _read(personae_alignment)
 
 	def get_bonus(cls, race):
 		"""
@@ -323,7 +323,7 @@ class Personae(PersonaeClassFeats, PersonaeClassSkills):
 			tuple
 				Returns a collection of class names.
 		"""
-		return __myitems__(personae_class)
+		return _read(personae_class)
 	
 	def get_feats(cls, omitted=[]):
 		"""
@@ -339,7 +339,7 @@ class Personae(PersonaeClassFeats, PersonaeClassSkills):
 			list
 				Returns a list of feats sans any omitted feats.
 		"""
-		feats = list(__myitems__(personae_feat))
+		feats = list(_read(personae_feat))
 		if len(omitted):
 			for feat in omitted:
 				feats.remove(feat)
@@ -354,18 +354,7 @@ class Personae(PersonaeClassFeats, PersonaeClassSkills):
 			tuple
 				Returns a tuple of race names.
 		"""
-		return __myitems__(personae_race)
-		
-	def get_score(cls, ability):
-		"""
-		Returns ability score.
-		
-		Returns
-		-------
-			int
-				Returns ability score value.
-		"""
-		return cls.ability[ability]['Score']
+		return _read(personae_race)
 	
 	def get_skills(cls):
 		"""
@@ -381,7 +370,7 @@ class Personae(PersonaeClassFeats, PersonaeClassSkills):
 			list
 				Returns a list of class names by _class.
 		"""
-		return __myitems__(personae_skill)
+		return _read(personae_skill)
 
 
 if __name__ == '__main__':
