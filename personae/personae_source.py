@@ -70,39 +70,39 @@ Format for including new backgrounds:
 personae_background = {
     'Acolyte':{
         'Skills':('Insight', 'Religion'),
-        'Tools':None,
+        'Tools':(),
         'Languages':2,
         'Equipment':('Holy Symbol', 'Prayer Book or Wheel', '5 Sticks of Insense', 'Vestments', 'Common Clothes', 15)
     },
     'Charlatan':{
         'Skills':('Deception', 'Sleight of Hand'),
         'Tools':('Disguise kit', 'Forgery Kit'),
-        'Languages':None,
+        'Languages':0,
         'Equipment':('Fine Clothes', 'Disguise Kit', 'Con Tools (ten stoppered bottles /w colored liquid, weighted dice, deck of marked cards) or signet ring of imaginary duke)', 15)
     },
     'Criminal':{
         'Skills':('Deception', 'Stealth'),
         'Tools':('Gaming set', 'thieves\'s tools'),
-        'Languages':None,
+        'Languages':0,
         'Equipment':('A Crowbar', 'Dark Common Clothes w/ Hood', 15)
     },
     'Entertainer':{
         'Skills':('Acrobatics', 'Performance'),
         'Tools':('Disguise kit', 'Musical Instrument'),
-        'Languages':None,
+        'Languages':0,
         'Equipment':('Musical Instrument', 'Favor of Admirer', 'Costume', 15)
     },
     'Folk Hero':{
         'Skills':('Animal Handling', 'Survival'), 
         'Tools':('Artisan\'s Tools', 'Vehicle (Land)'),
-        'Languages':None,
+        'Languages':0,
         'Equipment':('Artisan\'s Tools', 'Shovel', 'Iron Pot', 'Common Clothes', 10)
     },
     'Guild Artisan':{
         'Skills':('Insight', 'Persuasian'),
         'Tools':('Artisan\'s Tools'),
         'Languages':1,
-        'Equipment':('Artisan\'s Tools', 'Letter of Introduction From Guild', 'Traveler\'s Clothes', '15gp')
+        'Equipment':('Artisan\'s Tools', 'Letter of Introduction From Guild', 'Traveler\'s Clothes', 15)
     },
     'Hermit':{
         'Skills':('Medicine', 'Religion'),
@@ -124,26 +124,26 @@ personae_background = {
     },
     'Sage':{
         'Skills':('Arcana', 'History'),
-        'Tools':None,
+        'Tools':(),
         'Languages':2,
-        'Equipment':('Black Ink', 'Quill', 'Small Knife', 'Letter From Dead Colleague With Unanswered Question', 'Common Clothes', 10)
+        'Equipment':('Black Ink', 'Quill', 'Small Knife', 'Letter From Dead Colleague w/ Unanswered Question', 'Common Clothes', 10)
     },
     'Sailor':{
         'Skills':('Athletics', 'Perception'),
         'Tools':('Navigator\'s Tools', 'Vehicle (Water)'),
-        'Languages':None,
+        'Languages':0,
         'Equipment':('Belaying Pin', '50 Foot Silk Rope', 'Lucky Charm', 'Common Clothes', 10)
     },
     'Soldier':{
         'Skills':('Athletics', 'Intimidation'),
         'Tools':('Gaming Set', 'Vehicle(Land)'),
-        'Languages':None,
+        'Languages':0,
         'Equipment':('Rank Insignia', 'Trophy from Fallen Enemy', 'Set of Dice or Cards', 'Common Clothes', 10)
     },
     'Urchin':{
         'Skills':('Sleight of Hand', 'Stealth'),
         'Tools':('Disguise Kit', 'Thieves\'s Tools'),
-        'Languages':None,
+        'Languages':0,
         'Equipment':('Small Knife', 'City Map (home)', 'Pet Mouse', 'Token of Remembrance (parents)', 'Common Clothes', 10)
     }
 }
