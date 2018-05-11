@@ -82,7 +82,7 @@ personae_background = {
     },
     'Criminal':{
         'Skills':('Deception', 'Stealth'),
-        'Tools':('Gaming set', 'thieves\'s tools'),
+        'Tools':('Gaming set', 'Thieves\'s tools'),
         'Languages':0,
         'Equipment':('A Crowbar', 'Dark Common Clothes w/ Hood', 15)
     },
