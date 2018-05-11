@@ -14,4 +14,4 @@
 
 This module is a generic set of tools for use for Dungeons & Dragons 5e characters. Originally, I developed the module to set up a basic framework for a GUI character editor and prior to this a CLI character editor. I've since started using it as a Python exercise, using it to become more competent with Python LOL. I've scrapped the GUI editor for the time being.
 
-It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC.
+It should be noted that this software is not officially developed or endorsed by Wizard of the Coast LLC, who hold copyright for Dungeons & Dragons and its associated properties. Personae is a fan-made tool for personal use.
