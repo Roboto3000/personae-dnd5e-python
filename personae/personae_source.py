@@ -54,6 +54,103 @@ personae_alignment = {
 
 """
 #######################################################################
+BACKGROUND
+
+Format for including new backgrounds:
+
+'Name of Background':{
+    'Skills':'Tuple of two bonus skills e.g: 'Insight, Religion'.', 
+    'Tools':'Tuple of bonus tools for character background e.g: 'Artisan Tools, Forgery Skill'.'
+    'Languages':'Integer describing number of bonus languages.', 
+    'Equipment':'Tuple of bonus equipment e.g 'Disguise Kit', 'Fine Clothes'.'
+    }
+
+#######################################################################
+"""
+personae_background = {
+    'Acolyte':{
+        'Skills':('Insight', 'Religion'),
+        'Tools':None,
+        'Languages':2,
+        'Equipment':('Holy Symbol', 'Prayer Book or Wheel', '5 Sticks of Insense', 'Vestments', 'Common Clothes', 15)
+    },
+    'Charlatan':{
+        'Skills':('Deception', 'Sleight of Hand'),
+        'Tools':('Disguise kit', 'Forgery Kit'),
+        'Languages':None,
+        'Equipment':('Fine Clothes', 'Disguise Kit', 'Con Tools (ten stoppered bottles /w colored liquid, weighted dice, deck of marked cards) or signet ring of imaginary duke)', 15)
+    },
+    'Criminal':{
+        'Skills':('Deception', 'Stealth'),
+        'Tools':('Gaming set', 'thieves\'s tools'),
+        'Languages':None,
+        'Equipment':('A Crowbar', 'Dark Common Clothes w/ Hood', 15)
+    },
+    'Entertainer':{
+        'Skills':('Acrobatics', 'Performance'),
+        'Tools':('Disguise kit', 'Musical Instrument'),
+        'Languages':None,
+        'Equipment':('Musical Instrument', 'Favor of Admirer', 'Costume', 15)
+    },
+    'Folk Hero':{
+        'Skills':('Animal Handling', 'Survival'), 
+        'Tools':('Artisan\'s Tools', 'Vehicle (Land)'),
+        'Languages':None,
+        'Equipment':('Artisan\'s Tools', 'Shovel', 'Iron Pot', 'Common Clothes', 10)
+    },
+    'Guild Artisan':{
+        'Skills':('Insight', 'Persuasian'),
+        'Tools':('Artisan\'s Tools'),
+        'Languages':1,
+        'Equipment':('Artisan\'s Tools', 'Letter of Introduction From Guild', 'Traveler\'s Clothes', '15gp')
+    },
+    'Hermit':{
+        'Skills':('Medicine', 'Religion'),
+        'Tools':('Herbalism Kit'),
+        'Languages':1,
+        'Equipment':('Scroll Case', 'Winter Blanket', 'Common Clothes', 'Herbalism Kit', 5)
+    },
+    'Noble':{
+        'Skills':('History', 'Persuasion'),
+        'Tools':('Gaming Set'),
+        'Languages':1,
+        'Equipment':('Fine Clothes', 'Signet Ring', 'Scroll of Pedigree', 25)
+    },
+    'Outlander':{
+        'Skills':('Athletics', 'Survival'),
+        'Tools':('Musical Instrument'),
+        'Languages':1,
+        'Equipment':('Staff', 'Hunting Trap', 'Trophy From Killed Animal', 'Travelers\' Clothes', 10)
+    },
+    'Sage':{
+        'Skills':('Arcana', 'History'),
+        'Tools':None,
+        'Languages':2,
+        'Equipment':('Black Ink', 'Quill', 'Small Knife', 'Letter From Dead Colleague With Unanswered Question', 'Common Clothes', 10)
+    },
+    'Sailor':{
+        'Skills':('Athletics', 'Perception'),
+        'Tools':('Navigator\'s Tools', 'Vehicle (Water)'),
+        'Languages':None,
+        'Equipment':('Belaying Pin', '50 Foot Silk Rope', 'Lucky Charm', 'Common Clothes', 10)
+    },
+    'Soldier':{
+        'Skills':('Athletics', 'Intimidation'),
+        'Tools':('Gaming Set', 'Vehicle(Land)'),
+        'Languages':None,
+        'Equipment':('Rank Insignia', 'Trophy from Fallen Enemy', 'Set of Dice or Cards', 'Common Clothes', 10)
+    },
+    'Urchin':{
+        'Skills':('Sleight of Hand', 'Stealth'),
+        'Tools':('Disguise Kit', 'Thieves\'s Tools'),
+        'Languages':None,
+        'Equipment':('Small Knife', 'City Map (home)', 'Pet Mouse', 'Token of Remembrance (parents)', 'Common Clothes', 10)
+    }
+}
+
+
+"""
+#######################################################################
 CLASS
 
 Format for including new classes:

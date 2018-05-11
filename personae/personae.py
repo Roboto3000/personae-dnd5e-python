@@ -5,28 +5,29 @@ except ImportError:
 
 
 def _read(data):
-	"""
-	Returns tuple of data from data source.
+  """
+  Returns tuple of data from data source.
 
-	Parameters
-	----------
+  Parameters
+  ----------
 
-		data : dict
-			Dictionary of DnD data.
+    data : dict
+      Dictionary of DnD data.
 
-	Returns
-	-------
+  Returns
+  -------
 
-		tuple
-			Tuple of DnD game material.
-	"""
-	try:
-		out = []
-		for item in data.iteritems():
-			out.append(item[0])
-		return tuple(out)
-	except AttributeError:
-		return None
+    tuple
+      Tuple of DnD game material.
+  """
+  try:
+    out = []
+    for item in data.iteritems():
+      out.append(item[0])
+    out.sort()
+    return tuple(out)
+  except AttributeError:
+    return None
 
 
 def get_allotment(_class):
@@ -290,6 +291,17 @@ class Personae(PersonaeClassFeats, PersonaeClassSkills):
 		"""
 		return _read(personae_alignment)
 
+	def get_backgrounds(cls):
+		"""
+		Returns list of character backgrounds.
+		
+		Returns
+		-------
+			tuple
+				Returns a collection of background names.
+		"""
+		return _read(personae_background)
+  
 	def get_bonus(cls, race):
 		"""
 		Returns ability modifiers by race.
