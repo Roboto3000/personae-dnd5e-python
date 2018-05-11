@@ -1,10 +1,13 @@
 # Personae RPG Library
 
 **Author:** Marcus T. Taylor <mtaylor3121@gmail.com>\
-**Version:** 20180203
-
+**Version:** 20180510
 
 ## Changelog
+
+- Version *20180510*
+
+		- Added character backgrounds to Personae.
 
 - Version *20180203*
 
