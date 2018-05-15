@@ -29,7 +29,6 @@ def _read(data):
   except AttributeError:
     return None
 
-
 def get_allotment(_class):
 	"""
 	Returns number of skills by _class.
@@ -51,7 +50,6 @@ def get_allotment(_class):
 		num_of_skills = 3
 	return num_of_skills
 
-
 def get_modifier(score):
 	"""
 	Generates ability modifier by score.
@@ -67,7 +65,6 @@ def get_modifier(score):
 			Returns modifier value (score - 10)/2.
 	"""
 	return (score - 10)/2
-
 
 def is_caster(_class, level=1):
 	"""
@@ -94,7 +91,6 @@ def is_caster(_class, level=1):
 		return True
 	return False
 
-
 def get_requirements(feat):
 	"""Return requirements for feat.
 
@@ -110,8 +106,69 @@ def get_requirements(feat):
 	"""
 	return personae_feat[feat]
 
+def translate_scores(ability):
+  stats = ('Strength', 'Dexterity', 'Constitution', 
+    'Intelligence', 'Wisdom', 'Charisma')
+  scores = {}
+  for i,s in enumerate(ability):
+    scores[stats[i]] = {
+      'Score':s,
+      'Modifier':get_modifier(s)
+    }
+  return scores
 
-class PersonaeClassFeats:
+
+class PersonaeCharacterBackground:
+  def __init__(cls, background):
+    cls.Background = background
+    cls.Backgrounds = personae_background
+  
+  def get_equipment(cls):
+    """
+    Return tuple of bonus background equipment.
+        
+    Returns
+    -------
+      tuple
+        Return tuple of background bonus equipments.
+    """
+    return cls.Backgrounds[cls.Background]['Equipment']
+  
+  def get_languages(cls):
+    """
+    Returns number of bonus background languages.
+        
+    Returns
+    -------
+      int
+        Return int of number of background bonus languages.
+    """
+    return cls.Backgrounds[cls.Background]['Languages']
+  
+  def get_skills(cls):
+    """
+    Return tuple of bonus background skills.
+        
+    Returns
+    -------
+      tuple
+        Return tuple of background bonus skills.
+    """
+    return cls.Backgrounds[cls.Background]['Skills']
+  
+  def get_tools(cls):
+    """
+    Return tuple of bonus background tools.
+        
+    Returns
+    -------
+      tuple
+        Return tuple of background bonus tools.
+    """
+    return cls.Backgrounds[cls.Background]['Tools']
+
+
+class PersonaeCharacterFeats:
   def __init__(cls, feat, **kwargs):
     try:
       if not isinstance(kwargs['ability'], tuple):
@@ -122,18 +179,12 @@ class PersonaeClassFeats:
       exit("Value 'ability' must be a tuple!")
     except ValueError:
       exit("Value 'ability' requires 6 values!")
-    cls.ability = {}
-    stats = ('Strength', 'Dexterity', 'Constitution', 
-            'Intelligence', 'Wisdom', 'Charisma')
-    for i,s in enumerate(kwargs['ability']):
-      cls.ability[stats[i]] = { 
-        'Score':s, 
-        'Modifier':get_modifier(s)
-      }
-    cls._class = '_class' in kwargs and kwargs['_class'] or None
-    cls.feat = feat
-    cls.armor = cls.get_proficiency('a')
-    cls.weapon = cls.get_proficiency('w')
+    cls.Ability = translate_scores(kwargs['ability'])
+    cls._Class = '_class' in kwargs and kwargs['_class'] or None
+    cls.Feat = feat
+    cls.Feats = personae_feat
+    cls.Armor = cls.get_proficiency('a')
+    cls.Weapon = cls.get_proficiency('w')
 
   def get_armors(cls):
     """
@@ -144,8 +195,19 @@ class PersonaeClassFeats:
       tuple
         Returns a tuple of armor proficiencies.
     """
-    return cls.armor
+    return cls.Armor
   
+  def get_feats(cls):
+    """
+    Returns character feats.
+    
+    Returns
+    -------
+      tuple
+        Returns a tuple of character feats.
+    """
+    return cls.Feats
+
   def get_proficiency(cls, proficiency_flag='a'):
     """
     Returns armor/weapon proficiencies by _class.
@@ -163,9 +225,9 @@ class PersonaeClassFeats:
 				Returns proficiencies, if found; None otherwise.
 		"""
     if proficiency_flag is 'a':
-      proficiency = personae_class[cls._class]['Armors'].split(',')
+      proficiency = personae_class[cls._Class]['Armors'].split(',')
     elif proficiency_flag is 'w':
-      proficiency = personae_class[cls._class]['Weapons'].split(',')
+      proficiency = personae_class[cls._Class]['Weapons'].split(',')
     else:
       return None
     if '-' not in proficiency:
@@ -182,7 +244,7 @@ class PersonaeClassFeats:
       int
         Returns ability score value.
     """
-    return cls.ability[ability]['Score']
+    return cls.Ability[ability]['Score']
   
   def get_weapons(cls):
     """
@@ -193,7 +255,7 @@ class PersonaeClassFeats:
       tuple
         Returns a tuple of weapon proficiencies.
     """
-    return cls.weapon
+    return cls.Weapon
 
   def has_requirements(cls):
 		"""
@@ -204,12 +266,12 @@ class PersonaeClassFeats:
 			bool
 				True if requirements met; False otherwise.
 		"""
-		if cls.feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
-			if not is_caster(cls._class):
+		if cls.Feat in ('Elemental Adept', 'Spell Sniper', 'War Caster'):
+			if not is_caster(cls._Class):
 				return False
-		require = get_requirements(cls.feat)
+		require = get_requirements(cls.Feat)
 		if require['Class'] is not '-':
-			if cls._class not in require['Class'].split(','):
+			if cls._Class not in require['Class'].split(','):
 				return False
 		if require['Proficiency'] is not '-':
 			if require['Proficiency'] not in cls.get_armors() or cls.get_weapons():
@@ -229,7 +291,7 @@ class PersonaeClassFeats:
 		return True
 
 
-class PersonaeClassSkills:
+class PersonaeCharacterSkills:
   def __init__(cls, skill, **kwargs):
     try:
       if not isinstance(kwargs['ability'], tuple):
@@ -240,16 +302,9 @@ class PersonaeClassSkills:
       exit("Value 'ability' must be a tuple!")
     except ValueError:
       exit("Value 'ability' requires 6 values!")
-    cls.ability = {}
-    stats = ('Strength', 'Dexterity', 'Constitution', 
-            'Intelligence', 'Wisdom', 'Charisma')
-    for i,s in enumerate(kwargs['ability']):
-      cls.ability[stats[i]] = { 
-        'Score':s, 
-        'Modifier':get_modifier(s)
-      }
-    cls.race = 'race' in kwargs and kwargs['race'] or None
-    cls.skill = skill
+    cls.Ability = translate_scores(kwargs['ability'])
+    cls.Skill = skill
+    cls.Skills = personae_skill
     
   def get_ability(cls):
 		"""
@@ -260,7 +315,7 @@ class PersonaeClassSkills:
 			string
 				Returns a string name of the primary skill.
 		"""
-		return personae_skill[cls.skill]['Ability']
+		return personae_skill[cls.Skill]['Ability']
   
   def get_modifier(cls):
 		"""
@@ -271,13 +326,25 @@ class PersonaeClassSkills:
 			int
 				Returns a modifier for the skill.
 		"""
-		return cls.ability[cls.get_ability()]['Modifier']
+		return cls.Ability[cls.get_ability()]['Modifier']
+  
+  def get_skills(cls)
+    """
+    Returns a tuple of skills.
+    
+    Returns
+    -------
+      tuple
+        Returns a tuple of skills.
+    """
+    return cls.Skills
 	
 
-class Personae(PersonaeClassFeats, PersonaeClassSkills):
+class Personae(PersonaeCharacterFeats, PersonaeCharacterSkills):
 	def __init__(cls):
-		# super(PersonaeClassFeats, cls).__init__()
-		# super(PersonaeClassSkills, cls).__init__()
+    # super(PersonaeCharacterBackgrounds, cls).__init__()
+		# super(PersonaeCharacterFeats, cls).__init__()
+		# super(PersonaeCharacterSkills, cls).__init__()
 		pass
 	
 	def get_alignments(cls):
